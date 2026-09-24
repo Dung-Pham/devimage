@@ -1658,3 +1658,1191 @@ Do not declare success merely because the source code compiles.
 The final criterion is:
 
 **A normal Windows user can install DevImage and use it without installing Python, Node.js, Docker, or any development dependency.**
+
+
+
+# 34. Agent Continuity, Recovery & Interrupted Session Management — MANDATORY
+
+The development environment may experience unexpected interruptions at any time:
+
+* Internet disconnection
+* Electricity outage
+* PC restart
+* Antigravity crash
+* Agent process termination
+* Terminal crash
+* Model/API interruption
+* Windows update/restart
+* Manual interruption
+* Background task failure
+
+The project MUST be designed so that the agent can safely recover and continue without relying exclusively on the previous conversation memory.
+
+The repository itself must contain enough verified state for another agent session to understand where development stopped.
+
+---
+
+# 34.1. Recovery principle
+
+Conversation history is useful context.
+
+Git is the source of truth for code.
+
+Project state files are the source of truth for development progress.
+
+When recovering from an interruption:
+
+```
+Repository
+    ↓
+Git status
+    ↓
+Current branch
+    ↓
+Latest pushed commit
+    ↓
+Project state
+    ↓
+Tests / actual code
+    ↓
+Continue from verified state
+```
+
+Never assume that the last conversation message accurately represents the actual state of the code.
+
+The codebase and Git history have priority over conversational assumptions.
+
+---
+
+# 34.2. Persistent project state
+
+Create:
+
+```
+.agents/
+    rules/
+    state/
+```
+
+and maintain:
+
+```
+.agents/state/PROJECT_STATUS.md
+```
+
+This file is part of the repository and MUST be committed and pushed.
+
+It must contain:
+
+```
+# DevImage Project Status
+
+## Current Phase
+Phase 2 — Core Image Tools
+
+## Current Feature
+Resize
+
+## Current Branch
+feature/resize
+
+## Last Verified Commit
+abc1234
+
+## Last Verified Push
+origin/feature/resize
+
+## Completed
+- Resize service
+- Aspect ratio handling
+- Basic resize UI
+
+## In Progress
+- Batch processing UI
+
+## Next Step
+Implement batch progress handling.
+
+## Tests
+- Unit tests: PASS
+- Integration tests: PASS
+- GUI tests: NOT YET RUN
+
+## Known Issues
+- Large images need preview optimization
+
+## Important Decisions
+- Use Pillow for standard resize
+- Heavy processing runs through QThreadPool
+
+## Recovery Notes
+Last safe checkpoint:
+`abc1234`
+```
+
+The file must be factual.
+
+Do not write future intentions as completed work.
+
+---
+
+# 34.3. State update rule
+
+Update PROJECT_STATUS.md whenever one of these occurs:
+
+* feature starts
+* meaningful sub-feature completes
+* test milestone completes
+* important architecture decision is made
+* bug is fixed
+* major blocker is discovered
+* checkpoint commit is created
+* feature is completed
+
+Do not update status merely to create noise.
+
+The goal is that another agent can understand the project in less than a few minutes.
+
+---
+
+# 34.4. State must reflect verified reality
+
+Never write:
+
+```
+Resize completed
+```
+
+unless:
+
+* implementation exists
+* relevant tests pass
+* application behavior has been verified
+
+Never write:
+
+```
+pushed successfully
+```
+
+unless the push command actually succeeded.
+
+Never write:
+
+```
+feature complete
+```
+
+while important work remains.
+
+Status is evidence-based.
+
+---
+
+# 34.5. Atomic checkpoint rule
+
+For every meaningful development checkpoint:
+
+```
+Implement
+   ↓
+Test
+   ↓
+Verify
+   ↓
+Update PROJECT_STATUS.md
+   ↓
+Commit
+   ↓
+Push
+   ↓
+Verify push
+   ↓
+Continue
+```
+
+The status file must be committed together with the code state it describes.
+
+This is important.
+
+Do not update the state file in one commit while the corresponding code exists only in another unpushed commit.
+
+---
+
+# 34.6. Every feature must have a recovery checkpoint
+
+Example:
+
+```
+feature/remove-background
+```
+
+Checkpoint 1:
+
+```
+model manager working
+```
+
+Checkpoint 2:
+
+```
+model inference working
+```
+
+Checkpoint 3:
+
+```
+single image processing working
+```
+
+Checkpoint 4:
+
+```
+batch processing working
+```
+
+Checkpoint 5:
+
+```
+UI integration working
+```
+
+Checkpoint 6:
+
+```
+tests passing
+```
+
+Each checkpoint:
+
+```
+code
++
+PROJECT_STATUS.md
+↓
+commit
+↓
+push
+```
+
+---
+
+# 34.7. Interruption-safe development
+
+Assume the machine may shut down immediately after any command.
+
+Therefore:
+
+* Do not accumulate large uncommitted changes.
+* Do not keep important progress only in memory.
+* Do not assume the agent will finish the current task.
+* Commit meaningful progress frequently.
+* Push immediately after commits.
+* Keep PROJECT_STATUS.md reasonably current.
+
+The safest state is always:
+
+```
+Working code
++
+Git commit
++
+GitHub push
++
+Accurate PROJECT_STATUS.md
+```
+
+---
+
+# 34.8. Recovery protocol
+
+Whenever the agent starts a new conversation and the user says:
+
+```
+Continue
+```
+
+or:
+
+```
+Tiếp tục
+```
+
+or:
+
+```
+Continue from where you stopped.
+```
+
+The agent MUST NOT immediately start coding.
+
+First perform a recovery inspection.
+
+### Step 1 — Identify repository
+
+Check:
+
+```
+pwd
+git rev-parse --show-toplevel
+```
+
+Confirm the correct project.
+
+### Step 2 — Check Git
+
+Run:
+
+```
+git status
+git branch --show-current
+git log --oneline --decorate -10
+git remote -v
+```
+
+### Step 3 — Inspect project state
+
+Read:
+
+```
+.agents/state/PROJECT_STATUS.md
+```
+
+If it does not exist, inspect:
+
+```
+AGENTS.md
+GEMINI.md
+README.md
+implementation plans
+task documentation
+```
+
+### Step 4 — Compare state with reality
+
+Do not blindly trust PROJECT_STATUS.md.
+
+Compare it against:
+
+* current branch
+* latest commit
+* working tree
+* tests
+* actual source code
+
+If state says:
+
+```
+Resize UI completed
+```
+
+but Git/source code shows otherwise, treat the actual repository state as authoritative and correct PROJECT_STATUS.md.
+
+### Step 5 — Determine recovery point
+
+Identify:
+
+```
+Current phase
+Current feature
+Last verified commit
+Last pushed commit
+Uncommitted changes
+Pending task
+Last known error
+```
+
+### Step 6 — Protect current work
+
+If uncommitted changes exist:
+
+Do NOT delete them.
+
+Do NOT run:
+
+```
+git reset --hard
+```
+
+Do NOT run:
+
+```
+git clean -fd
+```
+
+Do NOT overwrite files blindly.
+
+Inspect the changes first.
+
+### Step 7 — Resume
+
+Only after establishing the current state should implementation continue.
+
+---
+
+# 34.9. Recovery message
+
+After recovery inspection, provide a concise status summary before editing.
+
+Use this format:
+
+```
+RECOVERY CHECK
+
+Project:
+DevImage
+
+Branch:
+feature/remove-background
+
+Last commit:
+abc1234 feat(remove-bg): add single image inference
+
+Push status:
+Confirmed pushed to origin
+
+Completed:
+- Model manager
+- Single image inference
+
+In progress:
+- Batch processing
+
+Next step:
+Implement batch worker + progress signals
+
+Tests:
+18 passed
+
+Uncommitted changes:
+2 files
+```
+
+Then continue the implementation.
+
+Do not ask the user to repeat previous context unless the repository genuinely does not contain enough information.
+
+---
+
+# 34.10. Recovery must prioritize Git over conversation
+
+When these disagree:
+
+Conversation says:
+
+```
+"Batch processing was completed."
+```
+
+But repository shows:
+
+```
+batch processing unfinished.
+```
+
+The repository wins.
+
+If:
+
+Conversation says:
+
+```
+"We were implementing Remove Background."
+```
+
+But current branch is:
+
+```
+feature/resize
+```
+
+and project state confirms Resize:
+
+Continue from the current repository state.
+
+Never resurrect assumptions merely because they existed in conversation history.
+
+---
+
+# 34.11. Conversation naming
+
+Long-running feature conversations should be renamed clearly.
+
+Examples:
+
+```
+DevImage — Foundation
+DevImage — Home UI
+DevImage — Resize
+DevImage — Remove Background
+DevImage — OCR
+DevImage — Gemini
+DevImage — Packaging
+```
+
+Do not create vague names such as:
+
+```
+New Chat
+Continue
+Test
+Fix
+```
+
+This makes conversation recovery easier.
+
+Antigravity supports persistent conversation history and resuming previous development threads. Use that capability where available, but still rely on repository state as the durable source of truth.
+
+---
+
+# 34.12. Implementation Plan continuity
+
+For large features, create an Implementation Plan before execution.
+
+The plan should contain:
+
+* objective
+* scope
+* affected files
+* architecture
+* implementation tasks
+* verification steps
+* acceptance criteria
+
+The implementation plan should remain available as an Artifact.
+
+When recovering from an interruption:
+
+1. Find the existing plan.
+2. Read it.
+3. Compare it with actual Git/source state.
+4. Continue from the first unfinished task.
+
+Do not regenerate the entire architecture from scratch unless the existing plan is demonstrably obsolete.
+
+---
+
+# 34.13. Task checklist
+
+Maintain a task checklist for the current phase.
+
+Example:
+
+```
+Phase 3 — Remove Background
+
+[x] Model manager
+[x] Download model
+[x] Verify checksum
+[x] Load model
+[x] Single image processing
+[ ] Batch processing
+[ ] Progress UI
+[ ] Cancel operation
+[ ] Preview
+[ ] Save result
+[ ] Integration tests
+```
+
+After each meaningful completion:
+
+1. Update checklist.
+2. Run tests.
+3. Update PROJECT_STATUS.md.
+4. Commit.
+5. Push.
+
+---
+
+# 34.14. Checkpoint commit format
+
+Use:
+
+```
+checkpoint(<feature>): <state>
+```
+
+Examples:
+
+```
+checkpoint(remove-bg): single image inference working
+
+checkpoint(ocr): local OCR integration working
+
+checkpoint(packaging): packaged app launches
+```
+
+Normal completed implementation should still use normal Conventional Commit messages.
+
+Checkpoint commits are specifically useful for recovery.
+
+---
+
+# 34.15. Emergency checkpoint
+
+If the agent determines that an interruption may happen soon, or the environment is unstable:
+
+Create a safe checkpoint.
+
+Example:
+
+```
+git status
+
+update PROJECT_STATUS.md
+
+git add <intended files>
+
+git commit -m "checkpoint(remove-bg): preserve current implementation"
+
+git push
+```
+
+Only then continue.
+
+---
+
+# 34.16. If network fails during push
+
+Do not assume the code is backed up.
+
+Determine:
+
+```
+commit exists locally?
+push succeeded?
+push failed?
+```
+
+If push fails:
+
+```
+STOP declaring the work backed up.
+```
+
+Retry the push when network connectivity is restored.
+
+Until successful:
+
+```
+GitHub backup = NOT CONFIRMED
+```
+
+Do not tell the user that the work is safely backed up until remote push succeeds.
+
+---
+
+# 34.17. If electricity is suddenly lost
+
+After restart:
+
+1. Open the project.
+2. Inspect Git.
+3. Inspect PROJECT_STATUS.md.
+4. Inspect latest commit.
+5. Inspect working tree.
+6. Run targeted tests if necessary.
+7. Determine whether the last changes were committed.
+8. If safe, continue.
+9. If local uncommitted changes exist, preserve them and inspect them before doing anything destructive.
+
+Never assume the last task was completed.
+
+---
+
+# 34.18. If Antigravity conversation is lost
+
+Do NOT restart the project mentally from zero.
+
+Use:
+
+```
+Git
++
+PROJECT_STATUS.md
++
+AGENTS.md
++
+Implementation Plan
++
+README
++
+source code
++
+tests
+```
+
+These together form the project's durable memory.
+
+The agent must be able to continue even with zero access to the previous conversation.
+
+---
+
+# 34.19. If agent starts with a fresh conversation
+
+The user should be able to type only:
+
+```
+Continue.
+```
+
+The agent must interpret that as:
+
+```
+Recover project state first.
+Do not start a new implementation plan blindly.
+Determine the current unfinished work.
+Continue from the verified checkpoint.
+```
+
+---
+
+# 34.20. Do not repeat completed work
+
+Before implementing any feature, verify:
+
+```
+Does the code already exist?
+```
+
+Check:
+
+* source
+* tests
+* Git history
+* project status
+* current branch
+
+If implementation already exists, do not recreate it.
+
+Instead:
+
+* test it
+* inspect it
+* fix it if necessary
+* continue with the next unfinished step.
+
+---
+
+# 34.21. Crash-safe task granularity
+
+Break large features into small recoverable units.
+
+Bad:
+
+```
+"Implement Remove Background completely."
+```
+
+Good:
+
+```
+"Create model manager."
+```
+
+Then:
+
+```
+"Implement local inference."
+```
+
+Then:
+
+```
+"Implement single-image processing."
+```
+
+Then:
+
+```
+"Implement batch worker."
+```
+
+Then:
+
+```
+"Implement preview."
+```
+
+Then:
+
+```
+"Implement tests."
+```
+
+Every unit should be independently commit-able.
+
+---
+
+# 34.22. Final state after each agent turn
+
+Before ending a meaningful work session, the agent should know:
+
+```
+What did I finish?
+What did I verify?
+What did I commit?
+What did I push?
+What remains?
+What should happen next?
+```
+
+These answers must exist in PROJECT_STATUS.md.
+
+Do not rely solely on the final chat message.
+
+---
+
+# 34.23. Durable memory hierarchy
+
+Use this priority:
+
+```
+1. Actual source code
+2. Git history
+3. GitHub remote
+4. PROJECT_STATUS.md
+5. Implementation Plan / Artifacts
+6. AGENTS.md / project rules
+7. Previous conversation
+```
+
+Conversation is context.
+
+Repository is truth.
+
+---
+
+# 34.24. Absolute continuity rule
+
+At any point in time, another AI agent should be able to clone the repository, read the project instructions and project state, inspect Git, and determine:
+
+* where the project currently is
+* what is already complete
+* what is currently being developed
+* what remains
+* what branch to work on
+* what the next task is
+* what tests have passed
+* what known problems exist
+
+without asking the original agent to explain the project.
+
+This is mandatory for the entire DevImage project.
+
+
+# 35. Context Mapping & Selective Documentation — MANDATORY
+
+The project uses a mapped documentation architecture.
+
+The agent MUST NOT read every documentation file at the beginning of every task.
+
+The purpose of the project map is to minimize unnecessary context consumption.
+
+## 35.1. Primary navigation files
+
+Always start from:
+
+```
+AGENTS.md
+```
+
+Then:
+
+```
+.agents/map/PROJECT_MAP.md
+```
+
+For current state:
+
+```
+.agents/state/CURRENT.md
+```
+
+These files act as the entry point.
+
+---
+
+## 35.2. Selective reading
+
+After reading PROJECT_MAP.md, identify the smallest set of files relevant to the current task.
+
+Example:
+
+Resize task:
+
+```
+.agents/state/CURRENT.md
+.agents/state/features/resize.md
+docs/features/resize.md
+docs/architecture/backend.md
+docs/architecture/workers.md
+```
+
+Do NOT read:
+
+```
+docs/features/ocr.md
+docs/features/gemini.md
+docs/features/remove-background.md
+```
+
+unless the current implementation actually depends on them.
+
+---
+
+## 35.3. Current state is not project history
+
+`.agents/state/CURRENT.md` must remain short.
+
+It describes only:
+
+* current phase
+* current branch
+* current feature
+* completed work
+* current task
+* next action
+* last verified commit
+* last verified push
+* tests
+* known issues
+* relevant documentation
+
+Do NOT turn CURRENT.md into a historical journal.
+
+---
+
+## 35.4. Historical information
+
+Historical information belongs in:
+
+```
+Git history
+feature state files
+phase state files
+ADR documents
+```
+
+Do not continuously append historical events to CURRENT.md.
+
+---
+
+## 35.5. Feature knowledge vs feature state
+
+Separate these concepts.
+
+Feature specification:
+
+```
+docs/features/<feature>.md
+```
+
+Feature progress:
+
+```
+.agents/state/features/<feature>.md
+```
+
+Architecture:
+
+```
+docs/architecture/
+```
+
+Current project state:
+
+```
+.agents/state/CURRENT.md
+```
+
+Do not duplicate the same large content across multiple files.
+
+---
+
+## 35.6. Documentation routing
+
+Whenever a feature document references:
+
+```
+Related Architecture
+Related Services
+Related Decisions
+Related Tests
+```
+
+follow only those references that are relevant to the current task.
+
+Do not recursively read unrelated documentation.
+
+---
+
+## 35.7. Source code is always inspected
+
+Documentation is a guide, not proof.
+
+Before modifying code:
+
+1. Read the relevant documentation.
+2. Inspect actual source code.
+3. Inspect tests.
+4. Compare documentation with implementation.
+
+If documentation conflicts with source code, treat actual verified code as authoritative and update the relevant documentation/state.
+
+---
+
+## 35.8. Search before reading large files
+
+If the required information is inside a large file, search for the relevant symbol, heading, class, function or keyword first.
+
+Read the smallest useful section.
+
+Do not load an entire large file when only one section is required.
+
+---
+
+## 35.9. Context budget discipline
+
+Minimize unnecessary context.
+
+Prefer:
+
+```
+map
+→
+relevant state
+→
+relevant specification
+→
+relevant architecture
+→
+source
+→
+tests
+```
+
+Avoid:
+
+```
+entire documentation tree
++
+entire source tree
++
+entire Git history
+```
+
+unless the task genuinely requires repository-wide analysis.
+
+---
+
+## 35.10. Resume behavior
+
+When the user says:
+
+```
+Continue
+```
+
+first read:
+
+```
+AGENTS.md
+.agents/map/PROJECT_MAP.md
+.agents/state/CURRENT.md
+```
+
+Then inspect Git:
+
+```
+git status
+git branch --show-current
+git log --oneline -10
+```
+
+Use CURRENT.md to determine what to read next.
+
+Do not restart project analysis from zero.
+
+Do not reread unrelated documentation.
+
+---
+
+## 35.11. Update routing
+
+After meaningful work:
+
+Update only the relevant state files.
+
+For example:
+
+Remove Background:
+
+```
+.agents/state/features/remove-background.md
+.agents/state/CURRENT.md
+```
+
+Do not rewrite unrelated feature states.
+
+---
+
+## 35.12. Documentation maintenance
+
+When implementation changes an architecture decision, API, file location or behavior:
+
+Update the smallest relevant documentation file.
+
+Do not create a giant new document.
+
+Keep documentation modular.
+
+---
+
+## 35.13. Mapping must remain accurate
+
+Whenever:
+
+* a feature is added
+* a feature file moves
+* architecture documentation moves
+* a state file is created
+* an important project directory changes
+
+update:
+
+```
+.agents/map/PROJECT_MAP.md
+```
+
+The map is the index of the project and must remain accurate.
+
+---
+
+## 35.14. Core rule
+
+The agent should always be able to answer:
+
+```
+"Where is the information I need?"
+```
+
+before asking:
+
+```
+"What is written in that information?"
+```
+
+Use PROJECT_MAP.md as the routing layer.
+
+The goal is:
+
+```
+FIND → READ → IMPLEMENT
+```
+
+not:
+
+```
+READ EVERYTHING → THINK → IMPLEMENT
+```
