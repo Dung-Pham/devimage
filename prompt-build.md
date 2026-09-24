@@ -945,6 +945,674 @@ At the end provide:
 12. Release notes
 
 ---
+# 33. Git / GitHub Management — MANDATORY
+
+GitHub đã được kết nối sẵn với môi trường làm việc.
+
+Không cần cấu hình lại authentication, GitHub account hoặc remote nếu đã tồn tại.
+
+Git phải được sử dụng như cơ chế version control + backup liên tục cho toàn bộ project.
+
+## 33.1. Nguyên tắc bắt buộc
+
+Mọi thay đổi code quan trọng phải được commit và push lên GitHub ngay sau khi hoàn thành một đơn vị chức năng có thể kiểm chứng.
+
+KHÔNG làm một lượng lớn chức năng rồi mới commit.
+
+KHÔNG giữ hàng trăm thay đổi local chưa commit.
+
+Do ổ lưu trữ hiện tại không đáng tin cậy, ưu tiên:
+
+```
+Code xong
+↓
+Test
+↓
+Commit
+↓
+Push GitHub
+↓
+Tiếp tục chức năng tiếp theo
+```
+
+GitHub remote phải luôn có bản code mới nhất có thể sử dụng.
+
+---
+
+# 33.2. Branch strategy
+
+Branch chính:
+
+```
+main
+```
+
+Không phát triển trực tiếp trên `main` trừ các thay đổi cực kỳ nhỏ như sửa documentation hoặc cấu hình đơn giản.
+
+Mỗi chức năng lớn phải có một branch riêng.
+
+Naming:
+
+```
+feature/<feature-name>
+```
+
+Ví dụ:
+
+```
+feature/project-foundation
+feature/home-ui
+feature/resize
+feature/compress
+feature/convert
+feature/crop
+feature/remove-background
+feature/image-inspector
+feature/color-picker
+feature/rename
+feature/copy-path
+feature/ocr
+feature/ai-analyze
+feature/alt-text
+feature/ai-command
+feature/packaging
+```
+
+Bug fix:
+
+```
+fix/<short-description>
+```
+
+Ví dụ:
+
+```
+fix/resize-aspect-ratio
+fix/background-model-loading
+fix/ocr-memory-leak
+```
+
+Packaging/build changes:
+
+```
+chore/<short-description>
+```
+
+Ví dụ:
+
+```
+chore/pyinstaller-config
+chore/github-release
+```
+
+---
+
+# 33.3. One feature = one branch
+
+Không gom nhiều chức năng độc lập vào cùng một feature branch.
+
+Ví dụ:
+
+ĐÚNG:
+
+```
+feature/resize
+feature/compress
+feature/convert
+feature/remove-background
+```
+
+KHÔNG:
+
+```
+feature/all-image-tools
+```
+
+Mỗi branch phải có scope rõ ràng.
+
+Ví dụ:
+
+```
+feature/resize
+```
+
+chỉ chứa:
+
+* Resize UI
+* Resize service
+* Resize worker integration
+* Resize tests
+* Resize documentation nếu cần
+
+Không thêm Compress hoặc Convert vào branch này.
+
+---
+
+# 33.4. Trước khi bắt đầu một branch
+
+Luôn kiểm tra:
+
+```
+git status
+git branch --show-current
+git remote -v
+```
+
+Sau đó đồng bộ branch chính:
+
+```
+git fetch origin
+```
+
+Nếu cần tạo feature branch mới:
+
+```
+git switch main
+git pull --ff-only origin main
+git switch -c feature/<feature-name>
+```
+
+Không tự ý dùng:
+
+```
+git reset --hard
+
+git clean -fd
+
+git push --force
+
+git push --force-with-lease
+```
+
+trừ khi có chỉ dẫn rõ ràng từ người dùng.
+
+Không được sử dụng các lệnh có khả năng làm mất code hiện tại.
+
+---
+
+# 33.5. Commit strategy
+
+Commit phải nhỏ, rõ ràng và có ý nghĩa.
+
+Sử dụng Conventional Commits.
+
+Examples:
+
+```
+feat(resize): add resize service
+
+feat(resize): add resize tool UI
+
+feat(resize): add batch processing
+
+test(resize): add resize service tests
+
+fix(resize): prevent image enlargement
+
+chore(packaging): configure pyinstaller
+
+docs: update setup instructions
+```
+
+Không dùng commit message kiểu:
+
+```
+update
+
+changes
+
+fix stuff
+
+test
+
+final
+
+final2
+
+final-final
+```
+
+---
+
+# 33.6. Commit after each completed unit
+
+Khi hoàn thành một unit có thể kiểm chứng:
+
+1. Run relevant tests.
+2. Check `git diff`.
+3. Check `git status`.
+4. Stage only intended files.
+5. Create meaningful commit.
+6. Push immediately.
+
+Ví dụ:
+
+```
+Resize service hoàn thành
+    ↓
+pytest tests/unit/tools/resize
+    ↓
+git diff
+    ↓
+git add ...
+    ↓
+git commit -m "feat(resize): add resize service"
+    ↓
+git push -u origin feature/resize
+```
+
+Sau đó mới tiếp tục Resize UI.
+
+Không chờ đến khi toàn bộ Resize hoàn thành mới push.
+
+---
+
+# 33.7. Push immediately
+
+Sau mỗi commit quan trọng phải push ngay.
+
+Ví dụ:
+
+```
+git push origin feature/resize
+```
+
+Sau lần push đầu tiên có thể thiết lập upstream:
+
+```
+git push -u origin feature/resize
+```
+
+Từ đó:
+
+```
+git push
+```
+
+Mục tiêu:
+
+Nếu máy local bị hỏng ngay sau đó, code đã được lưu trên GitHub.
+
+---
+
+# 33.8. Backup checkpoints
+
+Ngoài feature completion, phải tạo backup checkpoint khi:
+
+* hoàn thành architecture foundation
+* hoàn thành application shell
+* hoàn thành một tool
+* hoàn thành local AI model integration
+* hoàn thành OCR
+* hoàn thành Gemini integration
+* hoàn thành packaging
+* sửa bug quan trọng
+
+Nếu có thay đổi đang dang dở nhưng đủ an toàn để lưu checkpoint, có thể commit với message rõ ràng:
+
+```
+checkpoint(remove-background): model loading working
+```
+
+Không dùng checkpoint để thay thế việc chia commit hợp lý.
+
+---
+
+# 33.9. Merge strategy
+
+Sau khi một feature branch:
+
+* hoàn thành
+* test pass
+* application chạy được
+* không có known blocking issue
+
+thì merge vào `main`.
+
+Quy trình:
+
+```
+feature/resize
+      ↓
+tests pass
+      ↓
+commit
+      ↓
+push branch
+      ↓
+merge → main
+      ↓
+push main
+```
+
+Sau khi merge:
+
+```
+git switch main
+git pull --ff-only origin main
+```
+
+Sau đó tạo branch tiếp theo từ `main`.
+
+Không xây feature mới dựa trên branch feature cũ nếu không thực sự cần.
+
+---
+
+# 33.10. Preserve working states
+
+`main` phải luôn ở trạng thái tương đối ổn định.
+
+Không merge code rõ ràng đang hỏng vào `main`.
+
+Nếu một feature chưa hoàn thành:
+
+```
+feature/remove-background
+```
+
+giữ tất cả thay đổi ở branch đó.
+
+Có thể push branch nhiều lần để backup mà không ảnh hưởng `main`.
+
+---
+
+# 33.11. Recovery-first principle
+
+Nếu Git hoặc filesystem có dấu hiệu bất thường, ưu tiên backup code trước khi tiếp tục phát triển.
+
+Ví dụ:
+
+```
+git status
+git log --oneline -10
+git remote -v
+```
+
+Nếu commit hiện tại chưa được push:
+
+```
+git push
+```
+
+Không tiếp tục viết thêm code trong tình trạng chưa xác định lịch sử Git.
+
+---
+
+# 33.12. Before destructive changes
+
+Trước các thay đổi lớn như:
+
+* architecture refactor
+* dependency replacement
+* packaging changes
+* model replacement
+* major UI rewrite
+
+phải tạo một commit checkpoint trước.
+
+Ví dụ:
+
+```
+git commit -m "chore: checkpoint before architecture refactor"
+```
+
+Sau đó push.
+
+Chỉ bắt đầu refactor lớn sau khi checkpoint đã được push thành công lên GitHub.
+
+---
+
+# 33.13. Git status discipline
+
+Không để repository có trạng thái không rõ ràng.
+
+Cuối mỗi meaningful work session phải kiểm tra:
+
+```
+git status
+```
+
+AI agent phải biết chính xác:
+
+* branch hiện tại
+* commit mới nhất
+* thay đổi chưa commit
+* remote đã được push hay chưa
+
+Không tuyên bố hoàn thành khi vẫn còn thay đổi quan trọng chưa commit/push.
+
+---
+
+# 33.14. Feature implementation example
+
+Ví dụ triển khai Resize:
+
+```
+main
+  │
+  └── feature/resize
+          │
+          ├── commit 1
+          │   feat(resize): add resize service
+          │
+          ├── push
+          │
+          ├── commit 2
+          │   feat(resize): add resize UI
+          │
+          ├── push
+          │
+          ├── commit 3
+          │   test(resize): add resize tests
+          │
+          ├── push
+          │
+          └── final verification
+                  ↓
+               merge main
+                  ↓
+               push main
+```
+
+Sau đó:
+
+```
+main
+  │
+  └── feature/compress
+```
+
+Không làm tất cả tools trong một branch duy nhất.
+
+---
+
+# 33.15. Git checkpoints during long implementation
+
+Nếu một feature lớn cần nhiều ngày hoặc nhiều bước, vẫn phải push thường xuyên.
+
+Ví dụ Remove Background:
+
+```
+feature/remove-background
+
+commit:
+feat(remove-bg): add model manager
+push
+
+commit:
+feat(remove-bg): add inference engine
+push
+
+commit:
+feat(remove-bg): add single image processing
+push
+
+commit:
+feat(remove-bg): add batch processing
+push
+
+commit:
+feat(remove-bg): add preview UI
+push
+
+commit:
+test(remove-bg): add processing tests
+push
+```
+
+Không cần chờ toàn bộ feature hoàn thiện mới backup.
+
+---
+
+# 33.16. Never lose work for cleanliness
+
+Không được xóa hoặc reset code chỉ vì muốn repository "sạch" nếu chưa chắc thay đổi đó đã được backup.
+
+Ưu tiên:
+
+```
+Preserve
+↓
+Commit
+↓
+Push
+↓
+Clean up
+```
+
+thay vì:
+
+```
+Delete
+↓
+Reset
+↓
+Risk losing work
+```
+
+---
+
+# 33.17. Dependency changes
+
+Khi thêm hoặc thay dependency:
+
+1. Modify dependency configuration.
+2. Install.
+3. Verify application.
+4. Run tests.
+5. Commit dependency changes.
+6. Push.
+
+Ví dụ:
+
+```
+chore(deps): add onnxruntime
+```
+
+hoặc:
+
+```
+chore(deps): pin compatible pillow version
+```
+
+Không thay đổi hàng loạt dependency không cần thiết.
+
+---
+
+# 33.18. Release tags
+
+Khi hoàn thành một MVP hoặc phiên bản ổn định:
+
+```
+main
+  ↓
+git tag v0.1.0
+  ↓
+git push origin v0.1.0
+```
+
+Version format:
+
+```
+v0.1.0
+v0.2.0
+v1.0.0
+```
+
+Không tạo release tag cho code chưa qua acceptance test.
+
+---
+
+# 33.19. Final Git verification
+
+Trước khi kết thúc mỗi major phase:
+
+```
+git status
+```
+
+phải cho biết không còn thay đổi quan trọng chưa lưu.
+
+Kiểm tra:
+
+```
+git log --oneline --decorate -20
+```
+
+Kiểm tra branch:
+
+```
+git branch -a
+```
+
+Kiểm tra remote:
+
+```
+git remote -v
+```
+
+Đảm bảo branch cần thiết đã được push.
+
+Nếu có commit local chưa push:
+
+```
+git push
+```
+
+Không được kết thúc phase khi code quan trọng chỉ tồn tại trên local machine.
+
+---
+
+# 33.20. Absolute Git rules
+
+MUST:
+
+* Use feature branches.
+* Keep functions separated by branch.
+* Commit frequently.
+* Push immediately after meaningful commits.
+* Keep `main` stable.
+* Use meaningful commit messages.
+* Create checkpoints before major refactors.
+* Verify push success.
+* Protect existing work.
+
+MUST NOT:
+
+* Work on everything in one giant branch.
+* Accumulate huge uncommitted changes.
+* Force push.
+* Reset hard casually.
+* Delete uncommitted work.
+* Rewrite Git history unnecessarily.
+* Commit secrets/API keys.
+* Commit large AI model binaries unless explicitly required.
+* Claim work is backed up until push succeeds.
+
+The primary objective is:
+
+**At any point, the latest meaningful work must exist on GitHub so a local disk failure does not destroy the project.**
+
 
 # 32. Final acceptance test
 
