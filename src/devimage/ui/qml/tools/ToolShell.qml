@@ -115,7 +115,7 @@ Rectangle {
                     id: toolOptionsLoader
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    source: toolShell.toolId === "resize" ? "ResizeTool.qml" : (toolShell.toolId === "compress" ? "CompressTool.qml" : (toolShell.toolId === "convert" ? "ConvertTool.qml" : (toolShell.toolId === "crop" ? "CropTool.qml" : (toolShell.toolId === "inspector" ? "InspectorTool.qml" : (toolShell.toolId === "color_picker" ? "ColorPickerTool.qml" : (toolShell.toolId === "rename" ? "RenameTool.qml" : ""))))))
+                    source: toolShell.toolId === "resize" ? "ResizeTool.qml" : (toolShell.toolId === "compress" ? "CompressTool.qml" : (toolShell.toolId === "convert" ? "ConvertTool.qml" : (toolShell.toolId === "crop" ? "CropTool.qml" : (toolShell.toolId === "inspector" ? "InspectorTool.qml" : (toolShell.toolId === "color_picker" ? "ColorPickerTool.qml" : (toolShell.toolId === "rename" ? "RenameTool.qml" : (toolShell.toolId === "copy_path" ? "CopyPathTool.qml" : "")))))))
                     visible: source !== ""
                 }
 
@@ -155,12 +155,12 @@ Rectangle {
                     visible: toolOptionsLoader.source === ""
                 }
 
-                // Action Button (hidden for read-only inspector and color_picker tools)
+                // Action Button (hidden for read-only inspector, color_picker, and copy_path tools)
                 Button {
                     id: processBtn
                     Layout.fillWidth: true
                     height: 42
-                    visible: toolShell.toolId !== "inspector" && toolShell.toolId !== "color_picker"
+                    visible: toolShell.toolId !== "inspector" && toolShell.toolId !== "color_picker" && toolShell.toolId !== "copy_path"
 
                     property bool isBusy: (toolShell.toolId === "resize" && typeof resizeController !== "undefined" && resizeController && resizeController.isProcessing) || (toolShell.toolId === "compress" && typeof compressController !== "undefined" && compressController && compressController.isProcessing) || (toolShell.toolId === "convert" && typeof convertController !== "undefined" && convertController && convertController.isProcessing) || (toolShell.toolId === "crop" && typeof cropController !== "undefined" && cropController && cropController.isProcessing) || (toolShell.toolId === "rename" && typeof renameController !== "undefined" && renameController && renameController.isProcessing)
 
