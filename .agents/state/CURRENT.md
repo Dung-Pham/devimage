@@ -25,10 +25,10 @@ PAUSED_GATE (GATE-PHASE triggered: Phase 0 completed and verified)
 Upon human approval of GATE-PHASE, begin Phase 1: Application Shell decomposition and execution.
 
 # Last Verified Commit
-927d872 (feat(ui): implement PySide6 QML application engine and Main.qml window)
+b9f67b2 (chore(agent): record TASK-P0-05 commit and push checkpoint in task specs)
 
 # Last Verified Push
-origin/feature/project-foundation (commit 927d872 confirmed)
+origin/feature/project-foundation (commit b9f67b2 confirmed)
 
 # Tests
 All 18 automated tests passing (14 unit tests, 4 GUI smoke tests). Ruff lint clean with 0 warnings.
