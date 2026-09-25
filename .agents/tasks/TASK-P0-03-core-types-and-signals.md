@@ -4,10 +4,10 @@
 - **Task ID**: `TASK-P0-03-core-types-and-signals`
 - **Phase**: Phase 0 — Foundation & Project Setup
 - **Feature**: Core Models & Event Architecture
-- **Status**: PENDING
+- **Status**: COMPLETED
 - **Assigned Worker**: Implementer
 - **Created**: 2026-09-25 08:40
-- **Completed**:
+- **Completed**: 2026-09-25 08:48
 
 ---
 
