@@ -16,6 +16,8 @@ from devimage.app.settings import SettingsManager
 from devimage.core.signals import AppSignalBridge
 from devimage.tools.compress.controller import CompressController
 from devimage.tools.compress.service import CompressService
+from devimage.tools.convert.controller import ConvertController
+from devimage.tools.convert.service import ConvertService
 from devimage.tools.resize.controller import ResizeController
 from devimage.tools.resize.service import ResizeService
 
@@ -31,6 +33,7 @@ class BackendBridge(QObject):
         settings: SettingsManager,
         resize_controller: ResizeController | None = None,
         compress_controller: CompressController | None = None,
+        convert_controller: ConvertController | None = None,
         parent: QObject | None = None,
     ) -> None:
         super().__init__(parent)
@@ -38,6 +41,7 @@ class BackendBridge(QObject):
         self._settings = settings
         self._resize_controller = resize_controller
         self._compress_controller = compress_controller
+        self._convert_controller = convert_controller
 
     @Property(str, constant=True)
     def appName(self) -> str:
@@ -68,6 +72,11 @@ class BackendBridge(QObject):
     def compressController(self) -> CompressController | None:
         """Access to the image compress tool controller."""
         return self._compress_controller
+
+    @Property(QObject, constant=True)
+    def convertController(self) -> ConvertController | None:
+        """Access to the image convert tool controller."""
+        return self._convert_controller
 
     @Slot(str, result=str)
     def urlToPath(self, file_url: str) -> str:
@@ -156,17 +165,25 @@ class DevImageApp:
             signals=self.signals,
             settings=self.settings,
         )
+        self.convert_service = ConvertService()
+        self.convert_controller = ConvertController(
+            service=self.convert_service,
+            signals=self.signals,
+            settings=self.settings,
+        )
         self.backend = BackendBridge(
             signals=self.signals,
             settings=self.settings,
             resize_controller=self.resize_controller,
             compress_controller=self.compress_controller,
+            convert_controller=self.convert_controller,
         )
 
         self.engine = QQmlApplicationEngine()
         self.engine.rootContext().setContextProperty("backend", self.backend)
         self.engine.rootContext().setContextProperty("resizeController", self.resize_controller)
         self.engine.rootContext().setContextProperty("compressController", self.compress_controller)
+        self.engine.rootContext().setContextProperty("convertController", self.convert_controller)
 
         self._qml_path = Path(__file__).resolve().parent.parent / "ui" / "qml" / "Main.qml"
 

@@ -35,6 +35,8 @@ Rectangle {
                 resizeController.loadImage(toolShell.currentImagePath)
             } else if (toolShell.toolId === "compress" && typeof compressController !== "undefined" && compressController) {
                 compressController.loadImage(toolShell.currentImagePath)
+            } else if (toolShell.toolId === "convert" && typeof convertController !== "undefined" && convertController) {
+                convertController.loadImage(toolShell.currentImagePath)
             }
         }
     }
@@ -45,6 +47,8 @@ Rectangle {
                 resizeController.loadImage(toolShell.currentImagePath)
             } else if (toolShell.toolId === "compress" && typeof compressController !== "undefined" && compressController) {
                 compressController.loadImage(toolShell.currentImagePath)
+            } else if (toolShell.toolId === "convert" && typeof convertController !== "undefined" && convertController) {
+                convertController.loadImage(toolShell.currentImagePath)
             }
         }
     }
@@ -99,7 +103,7 @@ Rectangle {
                     id: toolOptionsLoader
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    source: toolShell.toolId === "resize" ? "ResizeTool.qml" : (toolShell.toolId === "compress" ? "CompressTool.qml" : "")
+                    source: toolShell.toolId === "resize" ? "ResizeTool.qml" : (toolShell.toolId === "compress" ? "CompressTool.qml" : (toolShell.toolId === "convert" ? "ConvertTool.qml" : ""))
                     visible: source !== ""
                 }
 
@@ -145,7 +149,7 @@ Rectangle {
                     Layout.fillWidth: true
                     height: 42
 
-                    property bool isBusy: (toolShell.toolId === "resize" && typeof resizeController !== "undefined" && resizeController && resizeController.isProcessing) || (toolShell.toolId === "compress" && typeof compressController !== "undefined" && compressController && compressController.isProcessing)
+                    property bool isBusy: (toolShell.toolId === "resize" && typeof resizeController !== "undefined" && resizeController && resizeController.isProcessing) || (toolShell.toolId === "compress" && typeof compressController !== "undefined" && compressController && compressController.isProcessing) || (toolShell.toolId === "convert" && typeof convertController !== "undefined" && convertController && convertController.isProcessing)
 
                     enabled: toolShell.currentImagePath.length > 0 && !isBusy
                     text: isBusy ? "Processing..." : ("Execute " + toolShell.toolTitle)
@@ -169,6 +173,8 @@ Rectangle {
                             resizeController.executeResize()
                         } else if (toolShell.toolId === "compress" && typeof compressController !== "undefined" && compressController) {
                             compressController.executeCompress()
+                        } else if (toolShell.toolId === "convert" && typeof convertController !== "undefined" && convertController) {
+                            convertController.executeConvert()
                         } else {
                             if (backend) {
                                 backend.signals.showToast(
