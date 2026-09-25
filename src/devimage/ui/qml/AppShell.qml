@@ -13,6 +13,7 @@ Rectangle {
     property string activeToolTitle: ""
 
     signal navigateRequested(string route, string toolId, string toolTitle)
+    signal settingsRequested()
 
     function navigateToHome() {
         currentRoute = "home"
@@ -60,11 +61,7 @@ Rectangle {
             currentRoute: shell.currentRoute
             activeToolTitle: shell.activeToolTitle
             onBackClicked: shell.navigateToHome()
-            onSettingsClicked: {
-                if (backend) {
-                    backend.signals.showToast("info", "Settings", "Settings preferences dialog", 2000)
-                }
-            }
+            onSettingsClicked: shell.settingsRequested()
         }
 
         // 2. Central Dynamic Workspace Area
