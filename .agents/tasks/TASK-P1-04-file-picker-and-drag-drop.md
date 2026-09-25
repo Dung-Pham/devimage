@@ -4,10 +4,10 @@
 - **Task ID**: `TASK-P1-04-file-picker-and-drag-drop`
 - **Phase**: Phase 1 — Application Shell
 - **Feature**: File Input & Drag/Drop
-- **Status**: PENDING
+- **Status**: COMPLETED
 - **Assigned Worker**: Implementer
 - **Created**: 2026-09-25 11:35
-- **Completed**:
+- **Completed**: 2026-09-25 11:47
 
 ---
 

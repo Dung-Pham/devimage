@@ -5,7 +5,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-from PySide6.QtCore import Property, QObject, QUrl
+from PySide6.QtCore import Property, QObject, QUrl, Slot
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlApplicationEngine
 from PySide6.QtQuickControls2 import QQuickStyle
@@ -50,6 +50,48 @@ class BackendBridge(QObject):
     def settings(self) -> SettingsManager:
         """Access to the persistent application settings manager."""
         return self._settings
+
+    @Slot(str, result=str)
+    def urlToPath(self, file_url: str) -> str:
+        """Convert a file:// QUrl string to a local filesystem path."""
+        if file_url.startswith("file:"):
+            return QUrl(file_url).toLocalFile()
+        return file_url
+
+    @Slot(str, result=bool)
+    def validateImageFile(self, file_path: str) -> bool:
+        """Verify that the path points to a file with a supported image extension."""
+        supported_exts = {
+            ".png",
+            ".jpg",
+            ".jpeg",
+            ".webp",
+            ".bmp",
+            ".tiff",
+            ".tif",
+            ".gif",
+            ".ico",
+            ".avif",
+        }
+        path = Path(file_path)
+        return path.is_file() and path.suffix.lower() in supported_exts
+
+    @Slot(str)
+    def openImageFile(self, file_path: str) -> None:
+        """Validate, record in recent files, and emit selection signal."""
+        clean_path = self.urlToPath(file_path)
+        if not self.validateImageFile(clean_path):
+            self._signals.triggerError(
+                "Invalid Image File",
+                f"File '{clean_path}' is not a supported or existing image.",
+                "The file extension is unsupported or the file does not exist.",
+                "Please select a PNG, JPEG, WebP, BMP, TIFF, GIF, ICO, or AVIF image file.",
+            )
+            return
+
+        self._settings.addRecentFile(clean_path)
+        self._signals.fileSelected.emit(clean_path)
+        self._signals.showToast("info", "Image Loaded", Path(clean_path).name, 2500)
 
 
 class DevImageApp:

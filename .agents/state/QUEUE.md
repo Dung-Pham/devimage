@@ -2,10 +2,10 @@
 
 ## 1. Queue Status & Active Task Pointer
 - **Queue State**: ACTIVE
-- **Active Task ID**: `TASK-P1-04-file-picker-and-drag-drop`
-- **Active Task Spec**: `.agents/tasks/TASK-P1-04-file-picker-and-drag-drop.md`
+- **Active Task ID**: `TASK-P1-05-preview-component-and-tool-shell`
+- **Active Task Spec**: `.agents/tasks/TASK-P1-05-preview-component-and-tool-shell.md`
 - **Total Queued**: 6
-- **Total Completed**: 8 (Phase 0 Archive + TASK-P1-01, TASK-P1-02, TASK-P1-03)
+- **Total Completed**: 9 (Phase 0 Archive + TASK-P1-01, TASK-P1-02, TASK-P1-03, TASK-P1-04)
 - **Total Blocked**: 0
 
 ---
@@ -14,8 +14,7 @@
 
 | Priority | Task ID | Phase | Feature | Status | Specification File |
 | :---: | :--- | :--- | :--- | :---: | :--- |
-| P3 | `TASK-P1-04-file-picker-and-drag-drop` | Phase 1 | File Input & DropZone | IN_PROGRESS | [.agents/tasks/TASK-P1-04-file-picker-and-drag-drop.md](file:///.agents/tasks/TASK-P1-04-file-picker-and-drag-drop.md) |
-| P4 | `TASK-P1-05-preview-component-and-tool-shell` | Phase 1 | Preview & ToolShell | PENDING | [.agents/tasks/TASK-P1-05-preview-component-and-tool-shell.md](file:///.agents/tasks/TASK-P1-05-preview-component-and-tool-shell.md) |
+| P4 | `TASK-P1-05-preview-component-and-tool-shell` | Phase 1 | Preview & ToolShell | IN_PROGRESS | [.agents/tasks/TASK-P1-05-preview-component-and-tool-shell.md](file:///.agents/tasks/TASK-P1-05-preview-component-and-tool-shell.md) |
 | P5 | `TASK-P1-06-phase-1-verification-and-acceptance` | Phase 1 | Acceptance Testing | PENDING | [.agents/tasks/TASK-P1-06-phase-1-verification-and-acceptance.md](file:///.agents/tasks/TASK-P1-06-phase-1-verification-and-acceptance.md) |
 
 ---
@@ -31,7 +30,8 @@
 | `TASK-P0-05-verification-and-smoke` | Smoke Test & Acceptance | 2026-09-25 08:53 | ea9b4d2 | YES |
 | `TASK-P1-01-app-shell-and-navigation` | Shell & Navigation | 2026-09-25 11:37 | 468fac0 | YES |
 | `TASK-P1-02-home-and-tool-cards` | Home & Tool Cards | 2026-09-25 11:39 | 3b286da | YES |
-| `TASK-P1-03-common-components-and-dialogs` | Components & Dialogs | 2026-09-25 11:44 | Pending commit | Pending push |
+| `TASK-P1-03-common-components-and-dialogs` | Components & Dialogs | 2026-09-25 11:44 | b3e811f | YES |
+| `TASK-P1-04-file-picker-and-drag-drop` | File Input & DropZone | 2026-09-25 11:47 | Pending commit | Pending push |
 
 ---
 
