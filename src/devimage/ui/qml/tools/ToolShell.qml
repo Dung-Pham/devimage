@@ -30,17 +30,21 @@ Rectangle {
     }
 
     onCurrentImagePathChanged: {
-        if (toolShell.toolId === "resize" && toolShell.currentImagePath) {
-            if (typeof resizeController !== "undefined" && resizeController) {
+        if (toolShell.currentImagePath) {
+            if (toolShell.toolId === "resize" && typeof resizeController !== "undefined" && resizeController) {
                 resizeController.loadImage(toolShell.currentImagePath)
+            } else if (toolShell.toolId === "compress" && typeof compressController !== "undefined" && compressController) {
+                compressController.loadImage(toolShell.currentImagePath)
             }
         }
     }
 
     onToolIdChanged: {
-        if (toolShell.toolId === "resize" && toolShell.currentImagePath) {
-            if (typeof resizeController !== "undefined" && resizeController) {
+        if (toolShell.currentImagePath) {
+            if (toolShell.toolId === "resize" && typeof resizeController !== "undefined" && resizeController) {
                 resizeController.loadImage(toolShell.currentImagePath)
+            } else if (toolShell.toolId === "compress" && typeof compressController !== "undefined" && compressController) {
+                compressController.loadImage(toolShell.currentImagePath)
             }
         }
     }
@@ -95,7 +99,7 @@ Rectangle {
                     id: toolOptionsLoader
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    source: toolShell.toolId === "resize" ? "ResizeTool.qml" : ""
+                    source: toolShell.toolId === "resize" ? "ResizeTool.qml" : (toolShell.toolId === "compress" ? "CompressTool.qml" : "")
                     visible: source !== ""
                 }
 
@@ -140,9 +144,11 @@ Rectangle {
                     id: processBtn
                     Layout.fillWidth: true
                     height: 42
-                    enabled: toolShell.currentImagePath.length > 0 && !(toolShell.toolId === "resize" && typeof resizeController !== "undefined" && resizeController && resizeController.isProcessing)
-                    text: (toolShell.toolId === "resize" && typeof resizeController !== "undefined" && resizeController && resizeController.isProcessing)
-                          ? "Processing..." : ("Execute " + toolShell.toolTitle)
+
+                    property bool isBusy: (toolShell.toolId === "resize" && typeof resizeController !== "undefined" && resizeController && resizeController.isProcessing) || (toolShell.toolId === "compress" && typeof compressController !== "undefined" && compressController && compressController.isProcessing)
+
+                    enabled: toolShell.currentImagePath.length > 0 && !isBusy
+                    text: isBusy ? "Processing..." : ("Execute " + toolShell.toolTitle)
 
                     contentItem: Text {
                         text: processBtn.text
@@ -161,6 +167,8 @@ Rectangle {
                     onClicked: {
                         if (toolShell.toolId === "resize" && typeof resizeController !== "undefined" && resizeController) {
                             resizeController.executeResize()
+                        } else if (toolShell.toolId === "compress" && typeof compressController !== "undefined" && compressController) {
+                            compressController.executeCompress()
                         } else {
                             if (backend) {
                                 backend.signals.showToast(
