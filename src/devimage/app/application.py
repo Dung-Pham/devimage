@@ -14,6 +14,8 @@ import devimage
 from devimage.app.logging import get_logger
 from devimage.app.settings import SettingsManager
 from devimage.core.signals import AppSignalBridge
+from devimage.tools.resize.controller import ResizeController
+from devimage.tools.resize.service import ResizeService
 
 logger = get_logger("application")
 
@@ -25,11 +27,13 @@ class BackendBridge(QObject):
         self,
         signals: AppSignalBridge,
         settings: SettingsManager,
+        resize_controller: ResizeController | None = None,
         parent: QObject | None = None,
     ) -> None:
         super().__init__(parent)
         self._signals = signals
         self._settings = settings
+        self._resize_controller = resize_controller
 
     @Property(str, constant=True)
     def appName(self) -> str:
@@ -50,6 +54,11 @@ class BackendBridge(QObject):
     def settings(self) -> SettingsManager:
         """Access to the persistent application settings manager."""
         return self._settings
+
+    @Property(QObject, constant=True)
+    def resizeController(self) -> ResizeController | None:
+        """Access to the image resize tool controller."""
+        return self._resize_controller
 
     @Slot(str, result=str)
     def urlToPath(self, file_url: str) -> str:
@@ -126,10 +135,21 @@ class DevImageApp:
 
         self.signals = AppSignalBridge()
         self.settings = SettingsManager()
-        self.backend = BackendBridge(signals=self.signals, settings=self.settings)
+        self.resize_service = ResizeService()
+        self.resize_controller = ResizeController(
+            service=self.resize_service,
+            signals=self.signals,
+            settings=self.settings,
+        )
+        self.backend = BackendBridge(
+            signals=self.signals,
+            settings=self.settings,
+            resize_controller=self.resize_controller,
+        )
 
         self.engine = QQmlApplicationEngine()
         self.engine.rootContext().setContextProperty("backend", self.backend)
+        self.engine.rootContext().setContextProperty("resizeController", self.resize_controller)
 
         self._qml_path = Path(__file__).resolve().parent.parent / "ui" / "qml" / "Main.qml"
 

@@ -29,6 +29,22 @@ Rectangle {
         }
     }
 
+    onCurrentImagePathChanged: {
+        if (toolShell.toolId === "resize" && toolShell.currentImagePath) {
+            if (typeof resizeController !== "undefined" && resizeController) {
+                resizeController.loadImage(toolShell.currentImagePath)
+            }
+        }
+    }
+
+    onToolIdChanged: {
+        if (toolShell.toolId === "resize" && toolShell.currentImagePath) {
+            if (typeof resizeController !== "undefined" && resizeController) {
+                resizeController.loadImage(toolShell.currentImagePath)
+            }
+        }
+    }
+
     RowLayout {
         anchors.fill: parent
         spacing: 0
@@ -74,11 +90,21 @@ Rectangle {
 
                 Rectangle { Layout.fillWidth: true; height: 1; color: "#222736" }
 
-                // Placeholder container for tool-specific controls in Phase 2
+                // Tool-specific options loader
+                Loader {
+                    id: toolOptionsLoader
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    source: toolShell.toolId === "resize" ? "ResizeTool.qml" : ""
+                    visible: source !== ""
+                }
+
+                // Placeholder container for generic/unimplemented tools
                 ColumnLayout {
                     id: optionsPlaceholder
                     Layout.fillWidth: true
                     spacing: 12
+                    visible: toolOptionsLoader.source === ""
 
                     Text {
                         text: "Options & Parameters"
@@ -104,15 +130,19 @@ Rectangle {
                     }
                 }
 
-                Item { Layout.fillHeight: true }
+                Item {
+                    Layout.fillHeight: true
+                    visible: toolOptionsLoader.source === ""
+                }
 
                 // Action Button
                 Button {
                     id: processBtn
                     Layout.fillWidth: true
                     height: 42
-                    enabled: toolShell.currentImagePath.length > 0
-                    text: "Execute " + toolShell.toolTitle
+                    enabled: toolShell.currentImagePath.length > 0 && !(toolShell.toolId === "resize" && typeof resizeController !== "undefined" && resizeController && resizeController.isProcessing)
+                    text: (toolShell.toolId === "resize" && typeof resizeController !== "undefined" && resizeController && resizeController.isProcessing)
+                          ? "Processing..." : ("Execute " + toolShell.toolTitle)
 
                     contentItem: Text {
                         text: processBtn.text
@@ -129,13 +159,17 @@ Rectangle {
                     }
 
                     onClicked: {
-                        if (backend) {
-                            backend.signals.showToast(
-                                "success",
-                                toolShell.toolTitle,
-                                "Processing pipeline triggered",
-                                2500
-                            )
+                        if (toolShell.toolId === "resize" && typeof resizeController !== "undefined" && resizeController) {
+                            resizeController.executeResize()
+                        } else {
+                            if (backend) {
+                                backend.signals.showToast(
+                                    "success",
+                                    toolShell.toolTitle,
+                                    "Processing pipeline triggered",
+                                    2500
+                                )
+                            }
                         }
                         toolShell.actionTriggered()
                     }
