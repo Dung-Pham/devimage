@@ -37,6 +37,8 @@ Rectangle {
                 compressController.loadImage(toolShell.currentImagePath)
             } else if (toolShell.toolId === "convert" && typeof convertController !== "undefined" && convertController) {
                 convertController.loadImage(toolShell.currentImagePath)
+            } else if (toolShell.toolId === "crop" && typeof cropController !== "undefined" && cropController) {
+                cropController.loadImage(toolShell.currentImagePath)
             }
         }
     }
@@ -49,6 +51,8 @@ Rectangle {
                 compressController.loadImage(toolShell.currentImagePath)
             } else if (toolShell.toolId === "convert" && typeof convertController !== "undefined" && convertController) {
                 convertController.loadImage(toolShell.currentImagePath)
+            } else if (toolShell.toolId === "crop" && typeof cropController !== "undefined" && cropController) {
+                cropController.loadImage(toolShell.currentImagePath)
             }
         }
     }
@@ -103,7 +107,7 @@ Rectangle {
                     id: toolOptionsLoader
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    source: toolShell.toolId === "resize" ? "ResizeTool.qml" : (toolShell.toolId === "compress" ? "CompressTool.qml" : (toolShell.toolId === "convert" ? "ConvertTool.qml" : ""))
+                    source: toolShell.toolId === "resize" ? "ResizeTool.qml" : (toolShell.toolId === "compress" ? "CompressTool.qml" : (toolShell.toolId === "convert" ? "ConvertTool.qml" : (toolShell.toolId === "crop" ? "CropTool.qml" : "")))
                     visible: source !== ""
                 }
 
@@ -149,7 +153,7 @@ Rectangle {
                     Layout.fillWidth: true
                     height: 42
 
-                    property bool isBusy: (toolShell.toolId === "resize" && typeof resizeController !== "undefined" && resizeController && resizeController.isProcessing) || (toolShell.toolId === "compress" && typeof compressController !== "undefined" && compressController && compressController.isProcessing) || (toolShell.toolId === "convert" && typeof convertController !== "undefined" && convertController && convertController.isProcessing)
+                    property bool isBusy: (toolShell.toolId === "resize" && typeof resizeController !== "undefined" && resizeController && resizeController.isProcessing) || (toolShell.toolId === "compress" && typeof compressController !== "undefined" && compressController && compressController.isProcessing) || (toolShell.toolId === "convert" && typeof convertController !== "undefined" && convertController && convertController.isProcessing) || (toolShell.toolId === "crop" && typeof cropController !== "undefined" && cropController && cropController.isProcessing)
 
                     enabled: toolShell.currentImagePath.length > 0 && !isBusy
                     text: isBusy ? "Processing..." : ("Execute " + toolShell.toolTitle)
@@ -175,6 +179,8 @@ Rectangle {
                             compressController.executeCompress()
                         } else if (toolShell.toolId === "convert" && typeof convertController !== "undefined" && convertController) {
                             convertController.executeConvert()
+                        } else if (toolShell.toolId === "crop" && typeof cropController !== "undefined" && cropController) {
+                            cropController.executeCrop()
                         } else {
                             if (backend) {
                                 backend.signals.showToast(
@@ -214,6 +220,16 @@ Rectangle {
                     id: previewCanvas
                     anchors.fill: parent
                     imageSource: toolShell.currentImagePath
+                }
+
+                CropOverlay {
+                    id: cropOverlay
+                    anchors.fill: parent
+                    visible: toolShell.toolId === "crop"
+                    imgX: previewCanvas.imgDisplayX
+                    imgY: previewCanvas.imgDisplayY
+                    imgW: previewCanvas.imgDisplayWidth
+                    imgH: previewCanvas.imgDisplayHeight
                 }
 
                 // Top Toolbar: Clear / Change Image

@@ -16,6 +16,11 @@ Rectangle {
     property int originalWidth: previewImage.sourceSize.width
     property int originalHeight: previewImage.sourceSize.height
 
+    readonly property real imgDisplayX: previewImage.x - flickable.contentX
+    readonly property real imgDisplayY: previewImage.y - flickable.contentY
+    readonly property real imgDisplayWidth: previewImage.width
+    readonly property real imgDisplayHeight: previewImage.height
+
     function formatSourceUrl(src) {
         if (!src) return ""
         if (typeof backend !== "undefined" && backend && backend.pathToUrl) {

@@ -18,6 +18,8 @@ from devimage.tools.compress.controller import CompressController
 from devimage.tools.compress.service import CompressService
 from devimage.tools.convert.controller import ConvertController
 from devimage.tools.convert.service import ConvertService
+from devimage.tools.crop.controller import CropController
+from devimage.tools.crop.service import CropService
 from devimage.tools.resize.controller import ResizeController
 from devimage.tools.resize.service import ResizeService
 
@@ -34,6 +36,7 @@ class BackendBridge(QObject):
         resize_controller: ResizeController | None = None,
         compress_controller: CompressController | None = None,
         convert_controller: ConvertController | None = None,
+        crop_controller: CropController | None = None,
         parent: QObject | None = None,
     ) -> None:
         super().__init__(parent)
@@ -42,6 +45,7 @@ class BackendBridge(QObject):
         self._resize_controller = resize_controller
         self._compress_controller = compress_controller
         self._convert_controller = convert_controller
+        self._crop_controller = crop_controller
 
     @Property(str, constant=True)
     def appName(self) -> str:
@@ -77,6 +81,11 @@ class BackendBridge(QObject):
     def convertController(self) -> ConvertController | None:
         """Access to the image convert tool controller."""
         return self._convert_controller
+
+    @Property(QObject, constant=True)
+    def cropController(self) -> CropController | None:
+        """Access to the image crop tool controller."""
+        return self._crop_controller
 
     @Slot(str, result=str)
     def urlToPath(self, file_url: str) -> str:
@@ -171,12 +180,19 @@ class DevImageApp:
             signals=self.signals,
             settings=self.settings,
         )
+        self.crop_service = CropService()
+        self.crop_controller = CropController(
+            service=self.crop_service,
+            signals=self.signals,
+            settings=self.settings,
+        )
         self.backend = BackendBridge(
             signals=self.signals,
             settings=self.settings,
             resize_controller=self.resize_controller,
             compress_controller=self.compress_controller,
             convert_controller=self.convert_controller,
+            crop_controller=self.crop_controller,
         )
 
         self.engine = QQmlApplicationEngine()
@@ -184,6 +200,7 @@ class DevImageApp:
         self.engine.rootContext().setContextProperty("resizeController", self.resize_controller)
         self.engine.rootContext().setContextProperty("compressController", self.compress_controller)
         self.engine.rootContext().setContextProperty("convertController", self.convert_controller)
+        self.engine.rootContext().setContextProperty("cropController", self.crop_controller)
 
         self._qml_path = Path(__file__).resolve().parent.parent / "ui" / "qml" / "Main.qml"
 
