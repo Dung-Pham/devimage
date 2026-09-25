@@ -26,10 +26,10 @@ Phase 1 Tasks (TASK-P1-01 through TASK-P1-06) Completed & Fully Verified. Gated 
 Commit TASK-P1-06, push to remote, present Phase 1 completion report to user for GATE-PHASE-1 sign-off.
 
 # Last Verified Commit
-bc970a8 (feat(ui): implement ImagePreview and reusable ToolShell page layout)
+7965530 (test(shell): add headless acceptance tests for Phase 1 user flows)
 
 # Last Verified Push
-origin/feature/app-shell (commit bc970a8 confirmed on GitHub)
+origin/feature/app-shell (commit 7965530 confirmed on GitHub)
 
 # Tests
 24/24 tests passing (100% passing headless QtQuick/QML and Python unit tests).

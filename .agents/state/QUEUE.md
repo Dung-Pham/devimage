@@ -32,7 +32,7 @@
 | `TASK-P1-03-common-components-and-dialogs` | Components & Dialogs | 2026-09-25 11:44 | b3e811f | YES |
 | `TASK-P1-04-file-picker-and-drag-drop` | File Input & DropZone | 2026-09-25 11:47 | 007e779 | YES |
 | `TASK-P1-05-preview-component-and-tool-shell` | Preview & ToolShell | 2026-09-25 11:49 | bc970a8 | YES |
-| `TASK-P1-06-phase-1-verification-and-acceptance` | Acceptance Testing | 2026-09-25 11:55 | Pending commit | Pending push |
+| `TASK-P1-06-phase-1-verification-and-acceptance` | Acceptance Testing | 2026-09-25 11:55 | 7965530 | YES |
 
 ---
 

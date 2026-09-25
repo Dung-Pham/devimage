@@ -61,5 +61,5 @@ Verify full verification suite (`ruff` + `pytest`).
 - **Commit Type**: test
 - **Commit Scope**: shell
 - **Commit Message**: `test(shell): add headless acceptance tests for Phase 1 user flows`
-- **Commit Hash**:
-- **Push Confirmed**: NO
+- **Commit Hash**: 7965530
+- **Push Confirmed**: YES
