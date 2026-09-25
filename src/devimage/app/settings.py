@@ -56,10 +56,12 @@ class SettingsManager(QObject):
         """Return all settings as a dictionary for QML."""
         return self._config.model_dump()
 
+    @Slot(str, "QVariant", result="QVariant")
     @Slot(str, result="QVariant")
     def get(self, key: str, default: Any = None) -> Any:
-        """Retrieve a specific setting value."""
-        return getattr(self._config, key, default)
+        """Retrieve a specific setting value with optional fallback."""
+        val = getattr(self._config, key, default)
+        return default if val is None else val
 
     @Slot(str, "QVariant")
     def set(self, key: str, value: Any) -> None:
