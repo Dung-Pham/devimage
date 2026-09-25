@@ -7,10 +7,11 @@ Welcome to the **DevImage** project. This file is the primary entry point and ma
 ## 1. First Actions on Every Turn
 
 Before taking any development action:
-1. **Read Current State**: Read [.agents/state/CURRENT.md](file:///.agents/state/CURRENT.md) first to determine the active phase, feature, and immediate next action.
+1. **Read Current State**: Read [.agents/state/CURRENT.md](file:///.agents/state/CURRENT.md), [.agents/state/RUN.md](file:///.agents/state/RUN.md), and [.agents/state/QUEUE.md](file:///.agents/state/QUEUE.md) to determine the active phase, feature, in-flight task, and queue state.
 2. **Inspect Git Environment**: Run `git status`, verify current branch, and inspect recent commits (`git log -n 5 --oneline`).
-3. **Check Routing Index**: Consult [.agents/map/PROJECT_MAP.md](file:///.agents/map/PROJECT_MAP.md) before opening any additional documentation or source files.
-4. **Selective Documentation Discipline**: Read *only* the specific files relevant to your current unit of work. Do not load the entire documentation tree.
+3. **Autonomous Controller Engine**: Follow [.agents/controller/BUILD_CONTROLLER.md](file:///.agents/controller/BUILD_CONTROLLER.md) for orchestrating task execution, verification, and human approval gates.
+4. **Check Routing Index**: Consult [.agents/map/PROJECT_MAP.md](file:///.agents/map/PROJECT_MAP.md) before opening any additional documentation or source files.
+5. **Selective Documentation Discipline**: Read *only* the specific files relevant to your current unit of work. Do not load the entire documentation tree.
 
 ---
 
@@ -25,6 +26,7 @@ Before taking any development action:
 ## 3. Mandatory Governance Rules
 
 All agents must strictly adhere to the project rules in `.agents/rules/`:
+- **Autonomous Execution**: Follow [.agents/rules/autonomous-execution.md](file:///.agents/rules/autonomous-execution.md) for loop invariants, context isolation, and gate protocols.
 - **Interruption Recovery**: Follow [.agents/rules/agent-continuity.md](file:///.agents/rules/agent-continuity.md) for crash recovery, state preservation, and uncommitted change handling.
 - **Git & Backup Safety**: Follow [.agents/rules/git.md](file:///.agents/rules/git.md) for branching, Conventional Commits, and remote push-verification requirements.
 - **Coding & Architecture**: Follow [.agents/rules/coding.md](file:///.agents/rules/coding.md) for Python-first desktop conventions, PySide6/QML separation, and testing standards.

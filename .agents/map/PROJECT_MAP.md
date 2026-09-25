@@ -9,6 +9,12 @@ Agents must consult this map to answer *"Where should I look for this informatio
 
 - **Active State Pointer**: [.agents/state/CURRENT.md](file:///.agents/state/CURRENT.md)
   *Always read first. Contains current phase, active feature, next concrete action, and git sync status.*
+- **Active Task Queue**: [.agents/state/QUEUE.md](file:///.agents/state/QUEUE.md)
+  *Prioritized list of in-flight, pending, and completed tasks.*
+- **Autonomous Run State**: [.agents/state/RUN.md](file:///.agents/state/RUN.md)
+  *Autonomous loop execution metadata, retry counter, and gate flags.*
+- **Task Specifications**: `.agents/tasks/`
+  *Self-contained, independently executable task specifications.*
 - **Phase State Archives**: `.agents/state/phases/`
   *Archived summary records created when individual development phases are completed.*
 - **Feature State Checkpoints**: `.agents/state/features/`
@@ -16,8 +22,25 @@ Agents must consult this map to answer *"Where should I look for this informatio
 
 ---
 
-## 2. Agent Governance Rules
+## 2. Autonomous Build Control System
 
+- **Build Controller**: [.agents/controller/BUILD_CONTROLLER.md](file:///.agents/controller/BUILD_CONTROLLER.md)
+  *12-step autonomous loop algorithm for queue execution, testing, and continuous deployment.*
+- **Human Approval Gates**: [.agents/controller/gates.md](file:///.agents/controller/gates.md)
+  *Mandatory stop conditions for phase transitions, dependencies, and branch merges.*
+- **Worker Protocols**: `.agents/workers/`
+  *Task Decomposer ([decomposer.md](file:///.agents/workers/decomposer.md)), Task Implementer ([implementer.md](file:///.agents/workers/implementer.md)), Surgical Fixer ([fixer.md](file:///.agents/workers/fixer.md)).*
+- **Verification Engine**: `.agents/verification/`
+  *Multi-layer Verification Runner ([verification-runner.md](file:///.agents/verification/verification-runner.md)) and Acceptance Matrix ([acceptance-matrix.md](file:///.agents/verification/acceptance-matrix.md)).*
+- **Autonomous Governance Rule**: [.agents/rules/autonomous-execution.md](file:///.agents/rules/autonomous-execution.md)
+- **Autonomous Architecture Guide**: [docs/architecture/autonomous-build-system.md](file:///docs/architecture/autonomous-build-system.md)
+
+---
+
+## 3. Agent Governance Rules
+
+- **Autonomous Execution**: [.agents/rules/autonomous-execution.md](file:///.agents/rules/autonomous-execution.md)
+  *Autonomous loop invariants, task isolation, and mandatory checkpointing.*
 - **Continuity & Recovery**: [.agents/rules/agent-continuity.md](file:///.agents/rules/agent-continuity.md)
   *Mandatory startup recovery, "Continue" protocol, checkpointing, and uncommitted work protection.*
 - **Git & Backup Workflow**: [.agents/rules/git.md](file:///.agents/rules/git.md)
