@@ -66,5 +66,5 @@ Implement the pure-Python `ColorService`, PySide6 `ColorPickerController` bridge
 - **Commit Type**: feat
 - **Commit Scope**: color-picker
 - **Commit Message**: `feat(color-picker): implement pixel color sampling service, controller bridge, and QML view`
-- **Commit Hash**: 
-- **Push Confirmed**: NO
+- **Commit Hash**: ea6d9d2
+- **Push Confirmed**: YES
