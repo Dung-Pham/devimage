@@ -56,5 +56,5 @@ Refactor the QML root to use a modular `AppShell.qml` component containing a per
 - **Commit Type**: feat
 - **Commit Scope**: shell
 - **Commit Message**: `feat(shell): implement AppShell, Header, Footer, and navigation container`
-- **Commit Hash**:
-- **Push Confirmed**: NO
+- **Commit Hash**: 468fac0
+- **Push Confirmed**: YES

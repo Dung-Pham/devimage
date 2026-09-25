@@ -80,68 +80,10 @@ Rectangle {
                 currentIndex: shell.currentRoute === "home" ? 0 : 1
 
                 // View 0: Home view container
-                Item {
-                    id: homeViewPage
-                    // Will host Home.qml grid in TASK-P1-02
-                    ColumnLayout {
-                        anchors.centerIn: parent
-                        spacing: 20
-                        width: Math.min(parent.width - 48, 680)
-
-                        Rectangle {
-                            Layout.fillWidth: true
-                            implicitHeight: homeCardContent.implicitHeight + 40
-                            radius: 12
-                            color: "#161922"
-                            border.color: "#262b3a"
-
-                            ColumnLayout {
-                                id: homeCardContent
-                                anchors.fill: parent
-                                anchors.margins: 24
-                                spacing: 16
-
-                                RowLayout {
-                                    spacing: 12
-                                    Rectangle {
-                                        width: 12
-                                        height: 12
-                                        radius: 6
-                                        color: "#10b981"
-                                    }
-                                    Text {
-                                        text: "DevImage Application Shell Active"
-                                        font.pixelSize: 18
-                                        font.bold: true
-                                        color: "#f8fafc"
-                                    }
-                                }
-
-                                Text {
-                                    text: "Modern desktop image toolbox designed for developers. Select any tool below to launch its workspace."
-                                    font.pixelSize: 14
-                                    color: "#94a3b8"
-                                    wrapMode: Text.WordWrap
-                                    Layout.fillWidth: true
-                                    lineHeight: 1.4
-                                }
-
-                                Rectangle { Layout.fillWidth: true; height: 1; color: "#262b3a" }
-
-                                // Quick test buttons to verify navigation
-                                RowLayout {
-                                    spacing: 12
-                                    Button {
-                                        text: "Open Resize Tool"
-                                        onClicked: shell.navigateToTool("resize", "Resize Image")
-                                    }
-                                    Button {
-                                        text: "Open Inspector"
-                                        onClicked: shell.navigateToTool("inspector", "Image Inspector")
-                                    }
-                                }
-                            }
-                        }
+                Home {
+                    id: homeView
+                    onToolSelected: function(toolId, toolTitle) {
+                        shell.navigateToTool(toolId, toolTitle)
                     }
                 }
 
