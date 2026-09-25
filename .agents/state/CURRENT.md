@@ -26,13 +26,13 @@ Phase 1 Tasks (TASK-P1-01 through TASK-P1-06) Completed & Fully Verified. Gated 
 Commit TASK-P1-06, push to remote, present Phase 1 completion report to user for GATE-PHASE-1 sign-off.
 
 # Last Verified Commit
-7965530 (test(shell): add headless acceptance tests for Phase 1 user flows)
+92860cd (fix(ui): resolve Windows local path to QUrl loading in ImagePreview and add global drop support)
 
 # Last Verified Push
-origin/feature/app-shell (commit 7965530 confirmed on GitHub)
+origin/feature/app-shell (commit 92860cd confirmed on GitHub)
 
 # Tests
-24/24 tests passing (100% passing headless QtQuick/QML and Python unit tests).
+25/25 tests passing (100% passing headless QtQuick/QML and Python unit tests).
 
 # Known Issues
 None.
