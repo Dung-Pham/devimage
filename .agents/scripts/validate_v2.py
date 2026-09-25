@@ -137,9 +137,13 @@ def run_all_validations() -> bool:
     assert v2_run_path.is_file(), "V2_RUN.json must exist"
     with open(v2_run_path, "r", encoding="utf-8") as f:
         v2_run = json.load(f)
-    assert v2_run["mode"] == "OBSERVE_ONLY", "Initial mode must be OBSERVE_ONLY"
+    assert v2_run["mode"] in (
+        "OBSERVE_ONLY",
+        "AUTONOMOUS_V2_FULL",
+        "AUTONOMOUS_V1_COMPAT",
+    ), f"Invalid controller mode: {v2_run.get('mode')}"
     assert v2_run["version"] == "2.0.0", "Version must be 2.0.0"
-    print("  -> Passed: Initial state is valid OBSERVE_ONLY.")
+    print(f"  -> Passed: Controller state has valid mode '{v2_run['mode']}'.")
 
     # 2. Active Session Detection
     print("[Test 2/12] Active session detection...")

@@ -39,6 +39,8 @@ Rectangle {
                 convertController.loadImage(toolShell.currentImagePath)
             } else if (toolShell.toolId === "crop" && typeof cropController !== "undefined" && cropController) {
                 cropController.loadImage(toolShell.currentImagePath)
+            } else if (toolShell.toolId === "inspector" && typeof inspectorController !== "undefined" && inspectorController) {
+                inspectorController.loadImage(toolShell.currentImagePath)
             }
         }
     }
@@ -53,6 +55,8 @@ Rectangle {
                 convertController.loadImage(toolShell.currentImagePath)
             } else if (toolShell.toolId === "crop" && typeof cropController !== "undefined" && cropController) {
                 cropController.loadImage(toolShell.currentImagePath)
+            } else if (toolShell.toolId === "inspector" && typeof inspectorController !== "undefined" && inspectorController) {
+                inspectorController.loadImage(toolShell.currentImagePath)
             }
         }
     }
@@ -107,7 +111,7 @@ Rectangle {
                     id: toolOptionsLoader
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    source: toolShell.toolId === "resize" ? "ResizeTool.qml" : (toolShell.toolId === "compress" ? "CompressTool.qml" : (toolShell.toolId === "convert" ? "ConvertTool.qml" : (toolShell.toolId === "crop" ? "CropTool.qml" : "")))
+                    source: toolShell.toolId === "resize" ? "ResizeTool.qml" : (toolShell.toolId === "compress" ? "CompressTool.qml" : (toolShell.toolId === "convert" ? "ConvertTool.qml" : (toolShell.toolId === "crop" ? "CropTool.qml" : (toolShell.toolId === "inspector" ? "InspectorTool.qml" : ""))))
                     visible: source !== ""
                 }
 
@@ -147,11 +151,12 @@ Rectangle {
                     visible: toolOptionsLoader.source === ""
                 }
 
-                // Action Button
+                // Action Button (hidden for read-only inspector tool)
                 Button {
                     id: processBtn
                     Layout.fillWidth: true
                     height: 42
+                    visible: toolShell.toolId !== "inspector"
 
                     property bool isBusy: (toolShell.toolId === "resize" && typeof resizeController !== "undefined" && resizeController && resizeController.isProcessing) || (toolShell.toolId === "compress" && typeof compressController !== "undefined" && compressController && compressController.isProcessing) || (toolShell.toolId === "convert" && typeof convertController !== "undefined" && convertController && convertController.isProcessing) || (toolShell.toolId === "crop" && typeof cropController !== "undefined" && cropController && cropController.isProcessing)
 
