@@ -57,5 +57,5 @@ Implement the domain primitives in `src/devimage/core/`: `models.py` (data struc
 - **Commit Type**: feat
 - **Commit Scope**: core
 - **Commit Message**: `feat(core): implement core models, types, structured errors, and signal bridge`
-- **Commit Hash**:
-- **Push Confirmed**: NO
+- **Commit Hash**: 1983876
+- **Push Confirmed**: YES
