@@ -57,5 +57,5 @@ Implement the headless GUI smoke test suite `tests/test_gui_smoke.py` validating
 - **Commit Type**: test
 - **Commit Scope**: smoke
 - **Commit Message**: `test(smoke): add headless gui smoke tests and verify Phase 0 acceptance`
-- **Commit Hash**:
-- **Push Confirmed**: NO
+- **Commit Hash**: ea9b4d2
+- **Push Confirmed**: YES

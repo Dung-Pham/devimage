@@ -26,7 +26,7 @@
 | `TASK-P0-02-app-foundation` | Application Foundation | 2026-09-25 08:45 | 245b100 | YES |
 | `TASK-P0-03-core-types-and-signals` | Core Models & Signals | 2026-09-25 08:48 | 1983876 | YES |
 | `TASK-P0-04-qml-application` | QML & Engine Setup | 2026-09-25 08:51 | 927d872 | YES |
-| `TASK-P0-05-verification-and-smoke` | Smoke Test & Acceptance | 2026-09-25 08:53 | Pending commit | Pending push |
+| `TASK-P0-05-verification-and-smoke` | Smoke Test & Acceptance | 2026-09-25 08:53 | ea9b4d2 | YES |
 
 ---
 
