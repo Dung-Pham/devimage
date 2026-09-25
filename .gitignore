@@ -64,3 +64,6 @@ models/*.bin
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Agent runtime locks (ephemeral concurrency control)
+.agents/locks/runtime/

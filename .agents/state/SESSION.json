@@ -1,0 +1,11 @@
+{
+  "session_id": "session-20260925-v2-migration",
+  "branch": "feature/autonomous-build-v2",
+  "status": "INITIALIZED",
+  "active_task_id": null,
+  "claimed_at": null,
+  "last_heartbeat_at": "2026-09-25T15:10:00+07:00",
+  "lease_seconds": 300,
+  "conversation_id": "b89a31b5-b53b-4fbb-9eae-02364db0cd30",
+  "agent_version": "v2.0.0"
+}
