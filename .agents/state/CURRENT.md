@@ -27,10 +27,10 @@ IN_PROGRESS: TASK-P3-01 complete; ready for commit and push checkpoint.
 Commit and push TASK-P3-01, then begin TASK-P3-02-color-picker-tool.
 
 # Last Verified Commit
-0d5a33c (feat(inspector): implement image metadata inspector service, controller bridge, and QML view)
+a2dc12f (fix(ui): ensure full image metadata visibility across Crop, Inspector, and ToolShell)
 
 # Last Verified Push
-origin/feature/developer-tools (commit 0d5a33c confirmed on GitHub)
+origin/feature/developer-tools (commit a2dc12f confirmed on GitHub)
 
 # Tests
 106/106 tests passing (100% passing across unit, GUI smoke, and control plane suites).
