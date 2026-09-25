@@ -1,47 +1,46 @@
 # Current Phase
-Phase 1 — Application Shell
+Phase 2 — Core Image Tools
 
 # Current Feature
-Phase 1 Complete — Pending Human Approval Gate (GATE-PHASE-1)
+Core Image Engine Primitives & Async Worker Pool
 
 # Current Branch
-feature/app-shell
+feature/core-image-tools
 
 # Status
-Phase 1 Tasks (TASK-P1-01 through TASK-P1-06) Completed & Fully Verified. Gated at GATE-PHASE-1.
+TASK-P2-01 completed and verified. Ready for commit & push, advancing to TASK-P2-02-resize-tool.
 
 # Completed
-- Phase 0 Foundation 100% complete and verified (18 tests passing)
-- TASK-P1-01-app-shell-and-navigation: Header.qml, Footer.qml, AppShell.qml, and navigation state container (commit 468fac0)
-- TASK-P1-02-home-and-tool-cards: Home.qml, ToolCard.qml, SearchInput.qml with 13 categorized tools (commit 3b286da)
-- TASK-P1-03-common-components-and-dialogs: ToastBanner.qml, ErrorDialog.qml, SettingsDialog.qml (commit b3e811f)
-- TASK-P1-04-file-picker-and-drag-drop: DropZone.qml with drag-and-drop & FileDialog, backend validation slots (commit 007e779)
-- TASK-P1-05-preview-component-and-tool-shell: ImagePreview.qml (zoom, pan, metadata badge), ToolShell.qml workspace (commit bc970a8)
-- TASK-P1-06-phase-1-verification-and-acceptance: test_app_shell.py acceptance suite covering all Phase 1 flows
+- Phase 0 Foundation 100% complete and verified (commit 23b233f through 7420f20)
+- Phase 1 Application Shell 100% complete and verified (commit 468fac0 through 7965530)
+- GATE-PHASE-1 cleared by human confirmation
+- Phase 2 task decomposition complete (TASK-P2-01 through TASK-P2-06)
+- TASK-P2-01-image-engine-and-worker-pool: pure-Python Pillow image processor, metadata extraction, QThreadPool manager, and QRunnable ImageWorker with signals
 
 # In Progress
-- Awaiting human confirmation at GATE-PHASE-1 before initiating Phase 2 (Core Image Tools: Resize, Compress, Convert, Crop)
+- Staging and committing TASK-P2-01, then advancing to TASK-P2-02-resize-tool
 
 # Next Action
-Commit TASK-P1-06, push to remote, present Phase 1 completion report to user for GATE-PHASE-1 sign-off.
+Commit TASK-P2-01, push to remote, advance to TASK-P2-02-resize-tool.
 
 # Last Verified Commit
-92860cd (fix(ui): resolve Windows local path to QUrl loading in ImagePreview and add global drop support)
+eca2b29 (docs(agents): update run and current state for preview URL fix)
 
 # Last Verified Push
-origin/feature/app-shell (commit 92860cd confirmed on GitHub)
+origin/feature/core-image-tools (commit eca2b29 confirmed on GitHub)
 
 # Tests
-25/25 tests passing (100% passing headless QtQuick/QML and Python unit tests).
+44/44 tests passing (100% passing across unit, GUI smoke, and acceptance suites).
 
 # Known Issues
 None.
 
 # Relevant Documents
-- .agents/tasks/TASK-P1-06-phase-1-verification-and-acceptance.md
+- .agents/tasks/TASK-P2-01-image-engine-and-worker-pool.md
+- .agents/tasks/TASK-P2-02-resize-tool.md
 - .agents/state/QUEUE.md
 - .agents/state/RUN.md
 - .agents/controller/BUILD_CONTROLLER.md
 
 # Last Updated
-2026-09-25 11:55:00 +07:00
+2026-09-25 13:48:00 +07:00

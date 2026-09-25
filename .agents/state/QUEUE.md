@@ -1,12 +1,12 @@
 # DevImage Active Task Queue
 
 ## 1. Queue Status & Active Task Pointer
-- **Queue State**: GATED (Phase 1 Complete — Pending Human Gate Approval)
-- **Active Task ID**: None (Phase 1 Tasks Complete)
-- **Active Task Spec**: None
-- **Total Queued**: 0
-- **Total Completed**: 11 (Phase 0 Archive + TASK-P1-01 through TASK-P1-06)
-- **Total Blocked**: 1 (`GATE-PHASE-1` — Phase Transition Gate)
+- **Queue State**: ACTIVE
+- **Active Task ID**: `TASK-P2-02-resize-tool`
+- **Active Task Spec**: `.agents/tasks/TASK-P2-02-resize-tool.md`
+- **Total Queued**: 5
+- **Total Completed**: 12 (Phase 0 Archive + Phase 1 Tasks + TASK-P2-01)
+- **Total Blocked**: 0
 
 ---
 
@@ -14,7 +14,11 @@
 
 | Priority | Task ID | Phase | Feature | Status | Specification File |
 | :---: | :--- | :--- | :--- | :---: | :--- |
-| *None* | Queue empty for Phase 1 | — | — | — | — |
+| 1 | `TASK-P2-02-resize-tool` | Phase 2 | Resize Tool | PENDING | `.agents/tasks/TASK-P2-02-resize-tool.md` |
+| 2 | `TASK-P2-03-compress-tool` | Phase 2 | Compress Tool | PENDING | `.agents/tasks/TASK-P2-03-compress-tool.md` |
+| 3 | `TASK-P2-04-convert-tool` | Phase 2 | Convert Tool | PENDING | `.agents/tasks/TASK-P2-04-convert-tool.md` |
+| 4 | `TASK-P2-05-crop-tool` | Phase 2 | Crop Tool | PENDING | `.agents/tasks/TASK-P2-05-crop-tool.md` |
+| 5 | `TASK-P2-06-phase-2-verification-and-acceptance` | Phase 2 | Verification & Acceptance | PENDING | `.agents/tasks/TASK-P2-06-phase-2-verification-and-acceptance.md` |
 
 ---
 
@@ -33,6 +37,7 @@
 | `TASK-P1-04-file-picker-and-drag-drop` | File Input & DropZone | 2026-09-25 11:47 | 007e779 | YES |
 | `TASK-P1-05-preview-component-and-tool-shell` | Preview & ToolShell | 2026-09-25 11:49 | bc970a8 | YES |
 | `TASK-P1-06-phase-1-verification-and-acceptance` | Acceptance Testing | 2026-09-25 11:55 | 7965530 | YES |
+| `TASK-P2-01-image-engine-and-worker-pool` | Image Engine & Worker Pool | 2026-09-25 13:48 | Pending | NO |
 
 ---
 
@@ -40,4 +45,4 @@
 
 | Task ID | Reason / Gate ID | Rationale | Resolution Required |
 | :--- | :--- | :--- | :--- |
-| `Phase 2 Decomposition` | `GATE-PHASE-1` | Human sign-off required upon completing Phase 1 Application Shell before initiating Phase 2 Core Image Tools. | User approval to proceed to Phase 2. |
+| *None* | — | All gates cleared. Phase 2 active. | — |
