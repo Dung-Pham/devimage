@@ -1,11 +1,11 @@
 # DevImage Active Task Queue
 
 ## 1. Queue Status & Active Task Pointer
-- **Queue State**: IDLE (Awaiting Phase 0 Task Generation)
-- **Active Task ID**: None
-- **Active Task Spec**: None
-- **Total Queued**: 0
-- **Total Completed**: 0
+- **Queue State**: ACTIVE
+- **Active Task ID**: `TASK-P0-02-app-foundation`
+- **Active Task Spec**: `.agents/tasks/TASK-P0-02-app-foundation.md`
+- **Total Queued**: 5
+- **Total Completed**: 1
 - **Total Blocked**: 0
 
 ---
@@ -14,7 +14,10 @@
 
 | Priority | Task ID | Phase | Feature | Status | Specification File |
 | :---: | :--- | :--- | :--- | :---: | :--- |
-| *No tasks in queue. Will be populated by Task Decomposer when Phase 0 starts.* | | | | | |
+| P1 | `TASK-P0-02-app-foundation` | Phase 0 | App Foundation | IN_PROGRESS | [.agents/tasks/TASK-P0-02-app-foundation.md](file:///.agents/tasks/TASK-P0-02-app-foundation.md) |
+| P2 | `TASK-P0-03-core-types-and-signals` | Phase 0 | Core Models & Signals | PENDING | [.agents/tasks/TASK-P0-03-core-types-and-signals.md](file:///.agents/tasks/TASK-P0-03-core-types-and-signals.md) |
+| P3 | `TASK-P0-04-qml-application` | Phase 0 | QML & Engine Setup | PENDING | [.agents/tasks/TASK-P0-04-qml-application.md](file:///.agents/tasks/TASK-P0-04-qml-application.md) |
+| P4 | `TASK-P0-05-verification-and-smoke` | Phase 0 | Smoke Test & Acceptance | PENDING | [.agents/tasks/TASK-P0-05-verification-and-smoke.md](file:///.agents/tasks/TASK-P0-05-verification-and-smoke.md) |
 
 ---
 
@@ -22,7 +25,7 @@
 
 | Task ID | Feature | Completed At | Commit | Push Verified |
 | :--- | :--- | :--- | :--- | :---: |
-| *No tasks completed yet.* | | | | |
+| `TASK-P0-01-project-layout` | Project Layout & Build | 2026-09-25 08:43 | Pending commit | Pending push |
 
 ---
 

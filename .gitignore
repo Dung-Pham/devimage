@@ -1,0 +1,66 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+*.pyd
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# PyInstaller / Nuitka
+*.manifest
+*.spec
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# Linting
+.ruff_cache/
+.mypy_cache/
+
+# Application runtime logs & settings
+logs/
+*.log
+local_settings.json
+
+# Large AI model files (downloaded on demand)
+models/*.onnx
+models/*.bin
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
