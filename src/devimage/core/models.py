@@ -65,7 +65,9 @@ class ToastNotification(BaseModel):
     """Toast popup notification model."""
 
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    type: str = Field(default="info", description="Notification severity: info, success, warning, error")
+    type: str = Field(
+        default="info", description="Notification severity: info, success, warning, error"
+    )
     title: str = Field(description="Headline message")
     message: str = Field(default="", description="Detailed explanation")
     duration_ms: int = Field(default=3000, description="Display duration in milliseconds")

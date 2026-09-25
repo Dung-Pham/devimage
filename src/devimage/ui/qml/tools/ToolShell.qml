@@ -11,9 +11,23 @@ Rectangle {
     property string toolTitle: "Tool Workspace"
     property string toolDescription: "Configure parameters on the left and preview result on the right."
     property string currentImagePath: ""
+    readonly property bool hasImage: currentImagePath.length > 0
+    property alias zoomLevel: previewCanvas.zoomLevel
 
     signal backRequested()
     signal actionTriggered()
+
+    function resetView() {
+        if (previewCanvas) {
+            previewCanvas.resetZoom()
+        }
+    }
+
+    function fitToView() {
+        if (previewCanvas) {
+            previewCanvas.fitToView()
+        }
+    }
 
     RowLayout {
         anchors.fill: parent

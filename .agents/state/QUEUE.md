@@ -1,12 +1,12 @@
 # DevImage Active Task Queue
 
 ## 1. Queue Status & Active Task Pointer
-- **Queue State**: ACTIVE
-- **Active Task ID**: `TASK-P1-06-phase-1-verification-and-acceptance`
-- **Active Task Spec**: `.agents/tasks/TASK-P1-06-phase-1-verification-and-acceptance.md`
-- **Total Queued**: 6
-- **Total Completed**: 10 (Phase 0 Archive + TASK-P1-01, TASK-P1-02, TASK-P1-03, TASK-P1-04, TASK-P1-05)
-- **Total Blocked**: 0
+- **Queue State**: GATED (Phase 1 Complete — Pending Human Gate Approval)
+- **Active Task ID**: None (Phase 1 Tasks Complete)
+- **Active Task Spec**: None
+- **Total Queued**: 0
+- **Total Completed**: 11 (Phase 0 Archive + TASK-P1-01 through TASK-P1-06)
+- **Total Blocked**: 1 (`GATE-PHASE-1` — Phase Transition Gate)
 
 ---
 
@@ -14,7 +14,7 @@
 
 | Priority | Task ID | Phase | Feature | Status | Specification File |
 | :---: | :--- | :--- | :--- | :---: | :--- |
-| P5 | `TASK-P1-06-phase-1-verification-and-acceptance` | Phase 1 | Acceptance Testing | IN_PROGRESS | [.agents/tasks/TASK-P1-06-phase-1-verification-and-acceptance.md](file:///.agents/tasks/TASK-P1-06-phase-1-verification-and-acceptance.md) |
+| *None* | Queue empty for Phase 1 | — | — | — | — |
 
 ---
 
@@ -31,7 +31,8 @@
 | `TASK-P1-02-home-and-tool-cards` | Home & Tool Cards | 2026-09-25 11:39 | 3b286da | YES |
 | `TASK-P1-03-common-components-and-dialogs` | Components & Dialogs | 2026-09-25 11:44 | b3e811f | YES |
 | `TASK-P1-04-file-picker-and-drag-drop` | File Input & DropZone | 2026-09-25 11:47 | 007e779 | YES |
-| `TASK-P1-05-preview-component-and-tool-shell` | Preview & ToolShell | 2026-09-25 11:49 | Pending commit | Pending push |
+| `TASK-P1-05-preview-component-and-tool-shell` | Preview & ToolShell | 2026-09-25 11:49 | bc970a8 | YES |
+| `TASK-P1-06-phase-1-verification-and-acceptance` | Acceptance Testing | 2026-09-25 11:55 | Pending commit | Pending push |
 
 ---
 
@@ -39,4 +40,4 @@
 
 | Task ID | Reason / Gate ID | Rationale | Resolution Required |
 | :--- | :--- | :--- | :--- |
-| *None.* | | | |
+| `Phase 2 Decomposition` | `GATE-PHASE-1` | Human sign-off required upon completing Phase 1 Application Shell before initiating Phase 2 Core Image Tools. | User approval to proceed to Phase 2. |

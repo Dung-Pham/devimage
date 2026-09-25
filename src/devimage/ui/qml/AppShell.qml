@@ -6,6 +6,7 @@ import "tools"
 
 Rectangle {
     id: shell
+    objectName: "appShell"
     color: "#0f1117"
 
     // Navigation state
@@ -86,6 +87,7 @@ Rectangle {
                 // View 0: Home view container
                 Home {
                     id: homeView
+                    objectName: "homeView"
                     onToolSelected: function(toolId, toolTitle) {
                         shell.navigateToTool(toolId, toolTitle)
                     }
@@ -94,6 +96,7 @@ Rectangle {
                 // View 1: Active Tool view container
                 ToolShell {
                     id: activeToolShell
+                    objectName: "activeToolShell"
                     toolId: shell.activeToolId
                     toolTitle: shell.activeToolTitle
                     onBackRequested: shell.navigateToHome()

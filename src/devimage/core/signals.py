@@ -50,7 +50,9 @@ class AppSignalBridge(QObject):
     # -------------------------------------------------------------------------
 
     @Slot(str, str, str, int)
-    def showToast(self, toast_type: str, title: str, message: str = "", duration_ms: int = 3000) -> None:
+    def showToast(
+        self, toast_type: str, title: str, message: str = "", duration_ms: int = 3000
+    ) -> None:
         """Trigger a toast notification from Python or QML."""
         logger.debug("Toast emitted: [%s] %s - %s", toast_type, title, message)
         self.notify.emit(toast_type, title, message, duration_ms)

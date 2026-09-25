@@ -53,5 +53,5 @@ Implement `components/ImagePreview.qml` (supporting image pan, zoom with mouse w
 - **Commit Type**: feat
 - **Commit Scope**: ui
 - **Commit Message**: `feat(ui): implement ImagePreview and reusable ToolShell page layout`
-- **Commit Hash**:
-- **Push Confirmed**: NO
+- **Commit Hash**: bc970a8
+- **Push Confirmed**: YES

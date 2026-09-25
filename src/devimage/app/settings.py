@@ -23,10 +23,16 @@ class AppConfig(BaseModel):
     """Schema for persistent application settings."""
 
     theme: str = Field(default="dark", description="UI theme: dark, light, system")
-    output_dir: str = Field(default="", description="Default output directory. Empty for same as source.")
-    overwrite_mode: str = Field(default="rename", description="Conflict mode: rename, overwrite, ask")
+    output_dir: str = Field(
+        default="", description="Default output directory. Empty for same as source."
+    )
+    overwrite_mode: str = Field(
+        default="rename", description="Conflict mode: rename, overwrite, ask"
+    )
     auto_preview: bool = Field(default=True, description="Automatically generate previews on load")
-    default_quality: int = Field(default=85, ge=1, le=100, description="Default JPEG/WebP compression quality")
+    default_quality: int = Field(
+        default=85, ge=1, le=100, description="Default JPEG/WebP compression quality"
+    )
     window_width: int = Field(default=1100, ge=600, description="Main window width")
     window_height: int = Field(default=720, ge=400, description="Main window height")
     recent_files: list[str] = Field(default_factory=list, description="Recently opened file paths")

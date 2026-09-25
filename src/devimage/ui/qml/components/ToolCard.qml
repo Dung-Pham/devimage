@@ -4,6 +4,7 @@ import QtQuick.Layouts
 
 Rectangle {
     id: card
+    objectName: "toolCard"
     implicitWidth: 290
     implicitHeight: 96
     radius: 10
