@@ -2,13 +2,13 @@
 Phase 2 — Core Image Tools
 
 # Current Feature
-Core Image Engine Primitives & Async Worker Pool
+Resize Tool
 
 # Current Branch
 feature/core-image-tools
 
 # Status
-TASK-P2-01 completed and verified. Ready for commit & push, advancing to TASK-P2-02-resize-tool.
+TASK-P2-02 completed and verified. Advancing to TASK-P2-03-compress-tool.
 
 # Completed
 - Phase 0 Foundation 100% complete and verified (commit 23b233f through 7420f20)
@@ -16,31 +16,32 @@ TASK-P2-01 completed and verified. Ready for commit & push, advancing to TASK-P2
 - GATE-PHASE-1 cleared by human confirmation
 - Phase 2 task decomposition complete (TASK-P2-01 through TASK-P2-06)
 - TASK-P2-01-image-engine-and-worker-pool: pure-Python Pillow image processor, metadata extraction, QThreadPool manager, and QRunnable ImageWorker with signals
+- TASK-P2-02-resize-tool: standalone pure-Python ResizeService, PySide6 ResizeController bridge, QML view integration, presets, and aspect ratio locking
 
 # In Progress
-- Staging and committing TASK-P2-01, then advancing to TASK-P2-02-resize-tool
+- Advancing to TASK-P2-03-compress-tool
 
 # Next Action
-Commit TASK-P2-01, push to remote, advance to TASK-P2-02-resize-tool.
+Begin implementation of TASK-P2-03-compress-tool (CompressService, CompressController, and CompressTool.qml).
 
 # Last Verified Commit
-055b992 (feat(engine): implement core image engine primitives and async worker pool)
+7b70a9d (feat(resize): implement resize service, controller bridge, and QML view)
 
 # Last Verified Push
-origin/feature/core-image-tools (commit 055b992 confirmed on GitHub)
+origin/feature/core-image-tools (commit 7b70a9d confirmed on GitHub)
 
 # Tests
-44/44 tests passing (100% passing across unit, GUI smoke, and acceptance suites).
+55/55 tests passing (100% passing across unit, GUI smoke, and acceptance suites).
 
 # Known Issues
 None.
 
 # Relevant Documents
-- .agents/tasks/TASK-P2-01-image-engine-and-worker-pool.md
 - .agents/tasks/TASK-P2-02-resize-tool.md
+- .agents/tasks/TASK-P2-03-compress-tool.md
 - .agents/state/QUEUE.md
 - .agents/state/RUN.md
 - .agents/controller/BUILD_CONTROLLER.md
 
 # Last Updated
-2026-09-25 13:48:00 +07:00
+2026-09-25 14:28:00 +07:00

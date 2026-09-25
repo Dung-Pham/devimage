@@ -4,10 +4,10 @@
 - **Task ID**: `TASK-P2-02-resize-tool`
 - **Phase**: Phase 2 — Core Image Tools
 - **Feature**: Resize Tool
-- **Status**: PENDING
+- **Status**: COMPLETED
 - **Assigned Worker**: Implementer
 - **Created**: 2026-09-25 13:45
-- **Completed**: 
+- **Completed**: 2026-09-25 14:26
 
 ---
 
@@ -60,5 +60,5 @@ Implement the independent Resize tool adhering to the plan specification: pure-P
 - **Commit Type**: feat
 - **Commit Scope**: resize
 - **Commit Message**: `feat(resize): implement resize service, controller bridge, and QML view`
-- **Commit Hash**: 
-- **Push Confirmed**: NO
+- **Commit Hash**: 7b70a9d
+- **Push Confirmed**: YES
