@@ -1,11 +1,11 @@
 # DevImage Active Task Queue
 
 ## 1. Queue Status & Active Task Pointer
-- **Queue State**: ACTIVE
-- **Active Task ID**: `TASK-P0-05-verification-and-smoke`
-- **Active Task Spec**: `.agents/tasks/TASK-P0-05-verification-and-smoke.md`
+- **Queue State**: IDLE (Phase 0 Complete — Awaiting Phase 1 Decomposition)
+- **Active Task ID**: None
+- **Active Task Spec**: None
 - **Total Queued**: 5
-- **Total Completed**: 4
+- **Total Completed**: 5
 - **Total Blocked**: 0
 
 ---
@@ -14,7 +14,7 @@
 
 | Priority | Task ID | Phase | Feature | Status | Specification File |
 | :---: | :--- | :--- | :--- | :---: | :--- |
-| P4 | `TASK-P0-05-verification-and-smoke` | Phase 0 | Smoke Test & Acceptance | IN_PROGRESS | [.agents/tasks/TASK-P0-05-verification-and-smoke.md](file:///.agents/tasks/TASK-P0-05-verification-and-smoke.md) |
+| *All Phase 0 tasks completed.* | | | | | |
 
 ---
 
@@ -25,7 +25,8 @@
 | `TASK-P0-01-project-layout` | Project Layout & Build | 2026-09-25 08:43 | 23b233f | YES |
 | `TASK-P0-02-app-foundation` | Application Foundation | 2026-09-25 08:45 | 245b100 | YES |
 | `TASK-P0-03-core-types-and-signals` | Core Models & Signals | 2026-09-25 08:48 | 1983876 | YES |
-| `TASK-P0-04-qml-application` | QML & Engine Setup | 2026-09-25 08:51 | Pending commit | Pending push |
+| `TASK-P0-04-qml-application` | QML & Engine Setup | 2026-09-25 08:51 | 927d872 | YES |
+| `TASK-P0-05-verification-and-smoke` | Smoke Test & Acceptance | 2026-09-25 08:53 | Pending commit | Pending push |
 
 ---
 

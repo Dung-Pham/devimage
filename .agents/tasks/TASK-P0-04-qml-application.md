@@ -63,5 +63,5 @@ Implement the application entry point and PySide6 / QML integration: `src/devima
 - **Commit Type**: feat
 - **Commit Scope**: ui
 - **Commit Message**: `feat(ui): implement PySide6 QML application engine and Main.qml window`
-- **Commit Hash**:
-- **Push Confirmed**: NO
+- **Commit Hash**: 927d872
+- **Push Confirmed**: YES
