@@ -42,7 +42,7 @@
 | `TASK-P3-01-inspector-tool` | Image Inspector | 2026-09-25 15:35 | 0d5a33c | YES |
 | `TASK-P3-02-color-picker-tool` | Color Picker | 2026-09-25 16:09 | ea6d9d2 | YES |
 | `TASK-P3-03-batch-rename-tool` | Batch Rename | 2026-09-25 16:20 | 7cb3e15 | YES |
-| `TASK-P3-04-copy-path-tool` | Copy Path | 2026-09-25 16:26 | PENDING | PENDING |
+| `TASK-P3-04-copy-path-tool` | Copy Path | 2026-09-25 16:26 | e741742 | YES |
 
 ---
 

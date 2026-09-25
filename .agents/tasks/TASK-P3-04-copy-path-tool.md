@@ -64,5 +64,5 @@ Implement the pure-Python `PathService`, PySide6 `CopyPathController` bridge, an
 - **Commit Type**: feat
 - **Commit Scope**: copy-path
 - **Commit Message**: `feat(copy-path): implement developer path and snippet formatting service, controller, and QML view`
-- **Commit Hash**: 
-- **Push Confirmed**: NO
+- **Commit Hash**: e741742
+- **Push Confirmed**: YES

@@ -30,10 +30,10 @@ IN_PROGRESS: TASK-P3-04 complete; ready for commit and push checkpoint.
 Commit and push TASK-P3-04, then begin TASK-P3-05-phase-3-verification-and-acceptance.
 
 # Last Verified Commit
-16a670c (docs(agents): update task queue and state checkpoints for TASK-P3-03 completion)
+e741742 (feat(copy-path): implement developer path and snippet formatting service, controller, and QML view)
 
 # Last Verified Push
-origin/feature/developer-tools (commit 16a670c confirmed on GitHub)
+origin/feature/developer-tools (commit e741742 confirmed on GitHub)
 
 # Tests
 126/126 tests passing (100% passing across unit, GUI smoke, and control plane suites).
