@@ -22,10 +22,10 @@ Context aligned; ready for Phase 0 foundation setup
 Begin Phase 0: initialize project structure (src/devimage/, tests/), pyproject.toml, and PySide6/QML base dependencies.
 
 # Last Verified Commit
-1a8b5cf (chore(agent): point CURRENT.md to latest verified commit)
+22091eb (chore(agent): align project map and current state with master plan)
 
 # Last Verified Push
-origin/feature/project-foundation (commit 1a8b5cf confirmed on GitHub)
+origin/feature/project-foundation (commit 22091eb confirmed on GitHub)
 
 # Tests
 Not started (Phase 0 foundation pending).
