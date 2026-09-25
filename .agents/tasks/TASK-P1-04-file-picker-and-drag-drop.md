@@ -52,5 +52,5 @@ Implement `components/DropZone.qml` with visual drag hover states, validation fo
 - **Commit Type**: feat
 - **Commit Scope**: shell
 - **Commit Message**: `feat(shell): implement DropZone and native file picker integration`
-- **Commit Hash**:
-- **Push Confirmed**: NO
+- **Commit Hash**: 007e779
+- **Push Confirmed**: YES

@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import "common"
+import "tools"
 
 Rectangle {
     id: shell
@@ -49,6 +50,12 @@ Rectangle {
                 shell.navigateToHome()
             }
         }
+
+        function onFileSelected(filePath) {
+            if (activeToolShell) {
+                activeToolShell.currentImagePath = filePath
+            }
+        }
     }
 
     ColumnLayout {
@@ -85,33 +92,11 @@ Rectangle {
                 }
 
                 // View 1: Active Tool view container
-                Item {
-                    id: toolViewPage
-                    ColumnLayout {
-                        anchors.centerIn: parent
-                        spacing: 16
-
-                        Text {
-                            text: "Active Tool: " + shell.activeToolTitle + " (" + shell.activeToolId + ")"
-                            font.pixelSize: 20
-                            font.bold: true
-                            color: "#f8fafc"
-                            Layout.alignment: Qt.AlignHCenter
-                        }
-
-                        Text {
-                            text: "Tool workspace and preview container loaded. Click 'Home' to return."
-                            font.pixelSize: 14
-                            color: "#94a3b8"
-                            Layout.alignment: Qt.AlignHCenter
-                        }
-
-                        Button {
-                            text: "← Return to Home"
-                            Layout.alignment: Qt.AlignHCenter
-                            onClicked: shell.navigateToHome()
-                        }
-                    }
+                ToolShell {
+                    id: activeToolShell
+                    toolId: shell.activeToolId
+                    toolTitle: shell.activeToolTitle
+                    onBackRequested: shell.navigateToHome()
                 }
             }
         }
