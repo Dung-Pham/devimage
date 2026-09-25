@@ -1,12 +1,12 @@
 # DevImage Active Task Queue
 
 ## 1. Queue Status & Active Task Pointer
-- **Queue State**: ACTIVE
-- **Active Task ID**: `TASK-P2-06-phase-2-verification-and-acceptance`
-- **Active Task Spec**: `.agents/tasks/TASK-P2-06-phase-2-verification-and-acceptance.md`
-- **Total Queued**: 1
-- **Total Completed**: 16 (Phase 0 Archive + Phase 1 Tasks + TASK-P2-01 + TASK-P2-02 + TASK-P2-03 + TASK-P2-04 + TASK-P2-05)
-- **Total Blocked**: 0
+- **Queue State**: GATED
+- **Active Task ID**: None (Awaiting GATE-PHASE sign-off)
+- **Active Task Spec**: None
+- **Total Queued**: 0
+- **Total Completed**: 17 (Phase 0 Archive + Phase 1 Tasks + All Phase 2 Tasks)
+- **Total Blocked**: 1 (GATE-PHASE)
 
 ---
 
@@ -14,7 +14,7 @@
 
 | Priority | Task ID | Phase | Feature | Status | Specification File |
 | :---: | :--- | :--- | :--- | :---: | :--- |
-| 1 | `TASK-P2-06-phase-2-verification-and-acceptance` | Phase 2 | Verification & Acceptance | PENDING | `.agents/tasks/TASK-P2-06-phase-2-verification-and-acceptance.md` |
+| — | *None* | — | — | — | Phase 2 queue drained. |
 
 ---
 
@@ -38,6 +38,7 @@
 | `TASK-P2-03-compress-tool` | Compress Tool | 2026-09-25 14:34 | 7475cd8 | YES |
 | `TASK-P2-04-convert-tool` | Convert Tool | 2026-09-25 14:41 | e261f7b | YES |
 | `TASK-P2-05-crop-tool` | Crop Tool | 2026-09-25 14:54 | 892f518 | YES |
+| `TASK-P2-06-phase-2-verification-and-acceptance` | Acceptance Testing | 2026-09-25 15:00 | 88f2cc9 | YES |
 
 ---
 
@@ -45,4 +46,4 @@
 
 | Task ID | Reason / Gate ID | Rationale | Resolution Required |
 | :--- | :--- | :--- | :--- |
-| *None* | — | All gates cleared. Phase 2 active. | — |
+| `GATE-PHASE` | Phase 2 Completion Gate | Phase 2 Core Image Tools 100% completed and verified. Awaiting human sign-off to proceed to Autonomous Build System v2 migration. | User approval. |
