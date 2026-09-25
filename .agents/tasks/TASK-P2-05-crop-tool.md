@@ -4,10 +4,10 @@
 - **Task ID**: `TASK-P2-05-crop-tool`
 - **Phase**: Phase 2 — Core Image Tools
 - **Feature**: Crop Tool
-- **Status**: PENDING
+- **Status**: COMPLETED
 - **Assigned Worker**: Implementer
 - **Created**: 2026-09-25 13:45
-- **Completed**: 
+- **Completed**: 2026-09-25 14:54
 
 ---
 
@@ -61,6 +61,6 @@ Implement the independent Crop tool: pure-Python crop service (`src/devimage/too
 ## 6. Completion Checkpoint
 - **Commit Type**: feat
 - **Commit Scope**: crop
-- **Commit Message**: `feat(crop): implement crop service, interactive crop overlay, and QML view`
-- **Commit Hash**: 
-- **Push Confirmed**: NO
+- **Commit Message**: `feat(crop): implement image crop and rotate tool with interactive overlay and QML views`
+- **Commit Hash**: 892f518
+- **Push Confirmed**: YES

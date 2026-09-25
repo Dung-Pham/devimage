@@ -2,10 +2,10 @@
 
 ## 1. Queue Status & Active Task Pointer
 - **Queue State**: ACTIVE
-- **Active Task ID**: `TASK-P2-05-crop-tool`
-- **Active Task Spec**: `.agents/tasks/TASK-P2-05-crop-tool.md`
-- **Total Queued**: 2
-- **Total Completed**: 15 (Phase 0 Archive + Phase 1 Tasks + TASK-P2-01 + TASK-P2-02 + TASK-P2-03 + TASK-P2-04)
+- **Active Task ID**: `TASK-P2-06-phase-2-verification-and-acceptance`
+- **Active Task Spec**: `.agents/tasks/TASK-P2-06-phase-2-verification-and-acceptance.md`
+- **Total Queued**: 1
+- **Total Completed**: 16 (Phase 0 Archive + Phase 1 Tasks + TASK-P2-01 + TASK-P2-02 + TASK-P2-03 + TASK-P2-04 + TASK-P2-05)
 - **Total Blocked**: 0
 
 ---
@@ -14,8 +14,7 @@
 
 | Priority | Task ID | Phase | Feature | Status | Specification File |
 | :---: | :--- | :--- | :--- | :---: | :--- |
-| 1 | `TASK-P2-05-crop-tool` | Phase 2 | Crop Tool | PENDING | `.agents/tasks/TASK-P2-05-crop-tool.md` |
-| 2 | `TASK-P2-06-phase-2-verification-and-acceptance` | Phase 2 | Verification & Acceptance | PENDING | `.agents/tasks/TASK-P2-06-phase-2-verification-and-acceptance.md` |
+| 1 | `TASK-P2-06-phase-2-verification-and-acceptance` | Phase 2 | Verification & Acceptance | PENDING | `.agents/tasks/TASK-P2-06-phase-2-verification-and-acceptance.md` |
 
 ---
 
@@ -38,6 +37,7 @@
 | `TASK-P2-02-resize-tool` | Resize Tool | 2026-09-25 14:26 | 7b70a9d | YES |
 | `TASK-P2-03-compress-tool` | Compress Tool | 2026-09-25 14:34 | 7475cd8 | YES |
 | `TASK-P2-04-convert-tool` | Convert Tool | 2026-09-25 14:41 | e261f7b | YES |
+| `TASK-P2-05-crop-tool` | Crop Tool | 2026-09-25 14:54 | 892f518 | YES |
 
 ---
 
