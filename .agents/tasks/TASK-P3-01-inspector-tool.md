@@ -69,5 +69,5 @@ Implement the pure-Python `InspectorService`, PySide6 `InspectorController` brid
 - **Commit Type**: feat
 - **Commit Scope**: inspector
 - **Commit Message**: `feat(inspector): implement image metadata inspector service, controller bridge, and QML view`
-- **Commit Hash**: 
-- **Push Confirmed**: NO
+- **Commit Hash**: `0d5a33c`
+- **Push Confirmed**: YES
