@@ -37,7 +37,7 @@
 | `TASK-P1-04-file-picker-and-drag-drop` | File Input & DropZone | 2026-09-25 11:47 | 007e779 | YES |
 | `TASK-P1-05-preview-component-and-tool-shell` | Preview & ToolShell | 2026-09-25 11:49 | bc970a8 | YES |
 | `TASK-P1-06-phase-1-verification-and-acceptance` | Acceptance Testing | 2026-09-25 11:55 | 7965530 | YES |
-| `TASK-P2-01-image-engine-and-worker-pool` | Image Engine & Worker Pool | 2026-09-25 13:48 | Pending | NO |
+| `TASK-P2-01-image-engine-and-worker-pool` | Image Engine & Worker Pool | 2026-09-25 13:48 | 055b992 | YES |
 
 ---
 

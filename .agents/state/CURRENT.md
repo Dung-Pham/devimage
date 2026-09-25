@@ -24,10 +24,10 @@ TASK-P2-01 completed and verified. Ready for commit & push, advancing to TASK-P2
 Commit TASK-P2-01, push to remote, advance to TASK-P2-02-resize-tool.
 
 # Last Verified Commit
-eca2b29 (docs(agents): update run and current state for preview URL fix)
+055b992 (feat(engine): implement core image engine primitives and async worker pool)
 
 # Last Verified Push
-origin/feature/core-image-tools (commit eca2b29 confirmed on GitHub)
+origin/feature/core-image-tools (commit 055b992 confirmed on GitHub)
 
 # Tests
 44/44 tests passing (100% passing across unit, GUI smoke, and acceptance suites).
