@@ -2,13 +2,13 @@
 Phase 3 — Developer Tools
 
 # Current Feature
-Color Picker (Completed) / Batch Rename (Ready)
+Batch Rename (Completed) / Copy Path (Ready)
 
 # Current Branch
 feature/developer-tools
 
 # Status
-IN_PROGRESS: TASK-P3-02 complete; ready for commit and push checkpoint.
+IN_PROGRESS: TASK-P3-03 complete; ready for commit and push checkpoint.
 
 # Completed
 - Phase 0 Foundation 100% complete and verified (commits 23b233f through 7420f20)
@@ -18,33 +18,34 @@ IN_PROGRESS: TASK-P3-02 complete; ready for commit and push checkpoint.
 - Merged Phase 0, 1, 2, and v2 control plane cleanly to main and pushed to remote
 - Created and synchronized branch feature/developer-tools
 - Decomposed Phase 3 tasks (TASK-P3-01 through TASK-P3-05)
-- TASK-P3-01-inspector-tool: pure-Python InspectorService, PySide6 InspectorController bridge, QML view InspectorTool.qml, clipboard export (Copy Report, Copy JSON), and 10 unit tests (commit 0d5a33c).
-- TASK-P3-02-color-picker-tool: pure-Python ColorService, PySide6 ColorPickerController bridge, ColorPickerTool.qml, ColorPickerOverlay.qml, and 8 unit tests.
+- TASK-P3-01-inspector-tool: pure-Python InspectorService, PySide6 InspectorController bridge, QML view InspectorTool.qml, clipboard export, and 10 unit tests (commit 0d5a33c).
+- TASK-P3-02-color-picker-tool: pure-Python ColorService, PySide6 ColorPickerController bridge, ColorPickerTool.qml, ColorPickerOverlay.qml, and 8 unit tests (commits ea6d9d2, 8efc041).
+- TASK-P3-03-batch-rename-tool: pure-Python RenameService (templates, case transforms, find/replace, collision checks, atomic rollback), PySide6 RenameController bridge, RenameTool.qml, BatchRenameWorkspace.qml, and 6 unit/QML integration tests.
 
 # In Progress
-- Checkpointing TASK-P3-02-color-picker-tool before advancing to TASK-P3-03-batch-rename-tool
+- Checkpointing TASK-P3-03-batch-rename-tool before advancing to TASK-P3-04-copy-path-tool
 
 # Next Action
-Commit and push TASK-P3-02, then begin TASK-P3-03-batch-rename-tool.
+Commit and push TASK-P3-03, then begin TASK-P3-04-copy-path-tool.
 
 # Last Verified Commit
-ea6d9d2 (feat(color-picker): implement pixel color sampling service, controller bridge, and QML view)
+8efc041 (docs(agents): update task queue and state checkpoints for TASK-P3-02 completion)
 
 # Last Verified Push
-origin/feature/developer-tools (commit ea6d9d2 confirmed on GitHub)
+origin/feature/developer-tools (commit 8efc041 confirmed on GitHub)
 
 # Tests
-114/114 tests passing (100% passing across unit, GUI smoke, and control plane suites).
+120/120 tests passing (100% passing across unit, GUI smoke, and control plane suites).
 
 # Known Issues
 None.
 
 # Relevant Documents
-- .agents/tasks/TASK-P3-02-color-picker-tool.md
 - .agents/tasks/TASK-P3-03-batch-rename-tool.md
+- .agents/tasks/TASK-P3-04-copy-path-tool.md
 - .agents/state/QUEUE.md
 - .agents/state/RUN.md
 - .agents/controller/BUILD_CONTROLLER_V2.md
 
 # Last Updated
-2026-09-25 16:10:00 +07:00
+2026-09-25 16:21:00 +07:00

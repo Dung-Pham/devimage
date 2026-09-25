@@ -115,7 +115,7 @@ Rectangle {
                     id: toolOptionsLoader
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    source: toolShell.toolId === "resize" ? "ResizeTool.qml" : (toolShell.toolId === "compress" ? "CompressTool.qml" : (toolShell.toolId === "convert" ? "ConvertTool.qml" : (toolShell.toolId === "crop" ? "CropTool.qml" : (toolShell.toolId === "inspector" ? "InspectorTool.qml" : (toolShell.toolId === "color_picker" ? "ColorPickerTool.qml" : "")))))
+                    source: toolShell.toolId === "resize" ? "ResizeTool.qml" : (toolShell.toolId === "compress" ? "CompressTool.qml" : (toolShell.toolId === "convert" ? "ConvertTool.qml" : (toolShell.toolId === "crop" ? "CropTool.qml" : (toolShell.toolId === "inspector" ? "InspectorTool.qml" : (toolShell.toolId === "color_picker" ? "ColorPickerTool.qml" : (toolShell.toolId === "rename" ? "RenameTool.qml" : ""))))))
                     visible: source !== ""
                 }
 
@@ -162,10 +162,10 @@ Rectangle {
                     height: 42
                     visible: toolShell.toolId !== "inspector" && toolShell.toolId !== "color_picker"
 
-                    property bool isBusy: (toolShell.toolId === "resize" && typeof resizeController !== "undefined" && resizeController && resizeController.isProcessing) || (toolShell.toolId === "compress" && typeof compressController !== "undefined" && compressController && compressController.isProcessing) || (toolShell.toolId === "convert" && typeof convertController !== "undefined" && convertController && convertController.isProcessing) || (toolShell.toolId === "crop" && typeof cropController !== "undefined" && cropController && cropController.isProcessing)
+                    property bool isBusy: (toolShell.toolId === "resize" && typeof resizeController !== "undefined" && resizeController && resizeController.isProcessing) || (toolShell.toolId === "compress" && typeof compressController !== "undefined" && compressController && compressController.isProcessing) || (toolShell.toolId === "convert" && typeof convertController !== "undefined" && convertController && convertController.isProcessing) || (toolShell.toolId === "crop" && typeof cropController !== "undefined" && cropController && cropController.isProcessing) || (toolShell.toolId === "rename" && typeof renameController !== "undefined" && renameController && renameController.isProcessing)
 
-                    enabled: toolShell.currentImagePath.length > 0 && !isBusy
-                    text: isBusy ? "Processing..." : ("Execute " + toolShell.toolTitle)
+                    enabled: toolShell.toolId === "rename" ? (typeof renameController !== "undefined" && renameController && renameController.hasFiles && !renameController.hasCollisions && !isBusy) : (toolShell.currentImagePath.length > 0 && !isBusy)
+                    text: isBusy ? "Processing..." : (toolShell.toolId === "rename" ? ("Rename " + (typeof renameController !== "undefined" && renameController ? renameController.fileCount : 0) + " Files") : ("Execute " + toolShell.toolTitle))
 
                     contentItem: Text {
                         text: processBtn.text
@@ -190,6 +190,8 @@ Rectangle {
                             convertController.executeConvert()
                         } else if (toolShell.toolId === "crop" && typeof cropController !== "undefined" && cropController) {
                             cropController.executeCrop()
+                        } else if (toolShell.toolId === "rename" && typeof renameController !== "undefined" && renameController) {
+                            renameController.executeBatchRename()
                         } else {
                             if (backend) {
                                 backend.signals.showToast(
@@ -211,19 +213,33 @@ Rectangle {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            // State A: No image loaded -> DropZone
-            DropZone {
-                anchors.centerIn: parent
-                visible: !toolShell.currentImagePath
-                onFileDropped: function(path) {
-                    toolShell.currentImagePath = backend ? backend.urlToPath(path) : path
-                }
+            // Dedicated Batch Rename Workspace
+            Loader {
+                id: renameWorkspaceLoader
+                anchors.fill: parent
+                active: toolShell.toolId === "rename"
+                visible: active
+                source: "../components/BatchRenameWorkspace.qml"
             }
 
-            // State B: Image loaded -> Interactive Preview
+            // Regular Image Workspace for other tools
             Item {
                 anchors.fill: parent
-                visible: toolShell.currentImagePath.length > 0
+                visible: toolShell.toolId !== "rename"
+
+                // State A: No image loaded -> DropZone
+                DropZone {
+                    anchors.centerIn: parent
+                    visible: !toolShell.currentImagePath
+                    onFileDropped: function(path) {
+                        toolShell.currentImagePath = backend ? backend.urlToPath(path) : path
+                    }
+                }
+
+                // State B: Image loaded -> Interactive Preview
+                Item {
+                    anchors.fill: parent
+                    visible: toolShell.currentImagePath.length > 0
 
                 ImagePreview {
                     id: previewCanvas
@@ -335,4 +351,5 @@ Rectangle {
             }
         }
     }
+}
 }

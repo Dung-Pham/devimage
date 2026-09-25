@@ -2,10 +2,10 @@
 
 ## 1. Queue Status & Active Task Pointer
 - **Queue State**: ACTIVE
-- **Active Task ID**: `TASK-P3-03-batch-rename-tool`
-- **Active Task Spec**: `.agents/tasks/TASK-P3-03-batch-rename-tool.md`
-- **Total Queued**: 2
-- **Total Completed**: 19 (Phase 0 Foundation + Phase 1 Shell + Phase 2 Core Image Tools + TASK-P3-01 + TASK-P3-02)
+- **Active Task ID**: `TASK-P3-04-copy-path-tool`
+- **Active Task Spec**: `.agents/tasks/TASK-P3-04-copy-path-tool.md`
+- **Total Queued**: 1
+- **Total Completed**: 20 (Phase 0 Foundation + Phase 1 Shell + Phase 2 Core Image Tools + TASK-P3-01 + TASK-P3-02 + TASK-P3-03)
 - **Total Blocked**: 0
 
 ---
@@ -14,9 +14,8 @@
 
 | Priority | Task ID | Phase | Feature | Status | Specification File |
 | :---: | :--- | :--- | :--- | :---: | :--- |
-| 1 | `TASK-P3-03-batch-rename-tool` | Phase 3 | Batch Rename | PENDING | `.agents/tasks/TASK-P3-03-batch-rename-tool.md` |
-| 2 | `TASK-P3-04-copy-path-tool` | Phase 3 | Copy Path | PENDING | `.agents/tasks/TASK-P3-04-copy-path-tool.md` |
-| 3 | `TASK-P3-05-phase-3-verification-and-acceptance` | Phase 3 | Verification & Acceptance | PENDING | `.agents/tasks/TASK-P3-05-phase-3-verification-and-acceptance.md` |
+| 1 | `TASK-P3-04-copy-path-tool` | Phase 3 | Copy Path | PENDING | `.agents/tasks/TASK-P3-04-copy-path-tool.md` |
+| 2 | `TASK-P3-05-phase-3-verification-and-acceptance` | Phase 3 | Verification & Acceptance | PENDING | `.agents/tasks/TASK-P3-05-phase-3-verification-and-acceptance.md` |
 
 ---
 
@@ -43,6 +42,7 @@
 | `TASK-P2-06-phase-2-verification-and-acceptance` | Acceptance Testing | 2026-09-25 15:00 | 88f2cc9 | YES |
 | `TASK-P3-01-inspector-tool` | Image Inspector | 2026-09-25 15:35 | 0d5a33c | YES |
 | `TASK-P3-02-color-picker-tool` | Color Picker | 2026-09-25 16:09 | ea6d9d2 | YES |
+| `TASK-P3-03-batch-rename-tool` | Batch Rename | 2026-09-25 16:20 | PENDING | PENDING |
 
 ---
 

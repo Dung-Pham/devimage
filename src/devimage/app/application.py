@@ -24,6 +24,8 @@ from devimage.tools.crop.controller import CropController
 from devimage.tools.crop.service import CropService
 from devimage.tools.inspector.controller import InspectorController
 from devimage.tools.inspector.service import InspectorService
+from devimage.tools.rename.controller import RenameController
+from devimage.tools.rename.service import RenameService
 from devimage.tools.resize.controller import ResizeController
 from devimage.tools.resize.service import ResizeService
 
@@ -43,6 +45,7 @@ class BackendBridge(QObject):
         crop_controller: CropController | None = None,
         inspector_controller: InspectorController | None = None,
         color_controller: ColorPickerController | None = None,
+        rename_controller: RenameController | None = None,
         parent: QObject | None = None,
     ) -> None:
         super().__init__(parent)
@@ -54,6 +57,7 @@ class BackendBridge(QObject):
         self._crop_controller = crop_controller
         self._inspector_controller = inspector_controller
         self._color_controller = color_controller
+        self._rename_controller = rename_controller
 
     @Property(str, constant=True)
     def appName(self) -> str:
@@ -104,6 +108,11 @@ class BackendBridge(QObject):
     def colorPickerController(self) -> ColorPickerController | None:
         """Access to the color picker tool controller."""
         return self._color_controller
+
+    @Property(QObject, constant=True)
+    def renameController(self) -> RenameController | None:
+        """Access to the batch rename tool controller."""
+        return self._rename_controller
 
     @Slot(str, result=str)
     def urlToPath(self, file_url: str) -> str:
@@ -216,6 +225,12 @@ class DevImageApp:
             signals=self.signals,
             settings=self.settings,
         )
+        self.rename_service = RenameService()
+        self.rename_controller = RenameController(
+            service=self.rename_service,
+            signals=self.signals,
+            settings=self.settings,
+        )
         self.backend = BackendBridge(
             signals=self.signals,
             settings=self.settings,
@@ -225,6 +240,7 @@ class DevImageApp:
             crop_controller=self.crop_controller,
             inspector_controller=self.inspector_controller,
             color_controller=self.color_controller,
+            rename_controller=self.rename_controller,
         )
 
         self.engine = QQmlApplicationEngine()
@@ -237,6 +253,7 @@ class DevImageApp:
             "inspectorController", self.inspector_controller
         )
         self.engine.rootContext().setContextProperty("colorPickerController", self.color_controller)
+        self.engine.rootContext().setContextProperty("renameController", self.rename_controller)
 
         self._qml_path = Path(__file__).resolve().parent.parent / "ui" / "qml" / "Main.qml"
 
