@@ -4,11 +4,17 @@ import QtQuick.Layouts
 
 ScrollView {
     id: inspectorView
+    Layout.fillWidth: true
+    Layout.fillHeight: true
     clip: true
+    contentWidth: availableWidth
     ScrollBar.vertical.policy: ScrollBar.AsNeeded
 
+    readonly property var ctrl: (typeof inspectorController !== "undefined" && inspectorController) ? inspectorController : ((typeof backend !== "undefined" && backend && backend.inspectorController) ? backend.inspectorController : null)
+    readonly property bool hasData: ctrl ? ctrl.hasData : false
+
     ColumnLayout {
-        width: parent.width
+        width: inspectorView.availableWidth
         spacing: 14
 
         // Placeholder when no image is loaded
@@ -18,7 +24,7 @@ ScrollView {
             radius: 8
             color: "#1a1e2a"
             border.color: "#262b3a"
-            visible: !inspectorController || !inspectorController.hasData
+            visible: !inspectorView.hasData
 
             Text {
                 anchors.centerIn: parent
@@ -33,7 +39,7 @@ ScrollView {
         ColumnLayout {
             Layout.fillWidth: true
             spacing: 12
-            visible: inspectorController && inspectorController.hasData
+            visible: inspectorView.hasData
 
             // 1. Quick Copy Action Row
             RowLayout {
@@ -58,7 +64,11 @@ ScrollView {
                         radius: 6
                         color: parent.hovered ? "#4f46e5" : "#4338ca"
                     }
-                    onClicked: inspectorController.copyAll()
+                    onClicked: {
+                        if (inspectorView.ctrl) {
+                            inspectorView.ctrl.copyAll()
+                        }
+                    }
                 }
 
                 Button {
@@ -80,7 +90,11 @@ ScrollView {
                         color: parent.hovered ? "#1e293b" : "#0f172a"
                         border.color: "#38bdf8"
                     }
-                    onClicked: inspectorController.copyJson()
+                    onClicked: {
+                        if (inspectorView.ctrl) {
+                            inspectorView.ctrl.copyJson()
+                        }
+                    }
                 }
             }
 
@@ -109,19 +123,19 @@ ScrollView {
                     RowLayout {
                         Layout.fillWidth: true
                         Text { text: "Dimensions:"; color: "#94a3b8"; font.pixelSize: 11; Layout.fillWidth: true }
-                        Text { text: inspectorController ? inspectorController.dimensions + " px" : ""; color: "#f8fafc"; font.pixelSize: 11; font.bold: true }
+                        Text { text: inspectorView.ctrl ? (inspectorView.ctrl.dimensions + " px") : ""; color: "#f8fafc"; font.pixelSize: 11; font.bold: true }
                     }
 
                     RowLayout {
                         Layout.fillWidth: true
                         Text { text: "Aspect Ratio:"; color: "#94a3b8"; font.pixelSize: 11; Layout.fillWidth: true }
-                        Text { text: inspectorController ? inspectorController.aspectRatio : ""; color: "#f8fafc"; font.pixelSize: 11 }
+                        Text { text: inspectorView.ctrl ? inspectorView.ctrl.aspectRatio : ""; color: "#f8fafc"; font.pixelSize: 11 }
                     }
 
                     RowLayout {
                         Layout.fillWidth: true
                         Text { text: "Density (DPI):"; color: "#94a3b8"; font.pixelSize: 11; Layout.fillWidth: true }
-                        Text { text: inspectorController ? inspectorController.dpi : ""; color: "#cbd5e1"; font.pixelSize: 11 }
+                        Text { text: inspectorView.ctrl ? inspectorView.ctrl.dpi : ""; color: "#cbd5e1"; font.pixelSize: 11 }
                     }
                 }
             }
@@ -151,20 +165,20 @@ ScrollView {
                     RowLayout {
                         Layout.fillWidth: true
                         Text { text: "Format:"; color: "#94a3b8"; font.pixelSize: 11; Layout.fillWidth: true }
-                        Text { text: inspectorController ? inspectorController.format : ""; color: "#f8fafc"; font.pixelSize: 11; font.bold: true }
+                        Text { text: inspectorView.ctrl ? inspectorView.ctrl.format : ""; color: "#f8fafc"; font.pixelSize: 11; font.bold: true }
                     }
 
                     RowLayout {
                         Layout.fillWidth: true
                         Text { text: "File Size:"; color: "#94a3b8"; font.pixelSize: 11; Layout.fillWidth: true }
-                        Text { text: inspectorController ? inspectorController.fileSize : ""; color: "#f8fafc"; font.pixelSize: 11; font.bold: true }
+                        Text { text: inspectorView.ctrl ? inspectorView.ctrl.fileSize : ""; color: "#f8fafc"; font.pixelSize: 11; font.bold: true }
                     }
 
                     RowLayout {
                         Layout.fillWidth: true
                         Text { text: "Filename:"; color: "#94a3b8"; font.pixelSize: 11; Layout.fillWidth: true }
                         Text {
-                            text: inspectorController ? inspectorController.fileName : ""
+                            text: inspectorView.ctrl ? inspectorView.ctrl.fileName : ""
                             color: "#cbd5e1"
                             font.pixelSize: 11
                             elide: Text.ElideMiddle
@@ -199,24 +213,24 @@ ScrollView {
                     RowLayout {
                         Layout.fillWidth: true
                         Text { text: "Color Mode:"; color: "#94a3b8"; font.pixelSize: 11; Layout.fillWidth: true }
-                        Text { text: inspectorController ? inspectorController.colorMode : ""; color: "#f8fafc"; font.pixelSize: 11 }
+                        Text { text: inspectorView.ctrl ? inspectorView.ctrl.colorMode : ""; color: "#f8fafc"; font.pixelSize: 11 }
                     }
 
                     RowLayout {
                         Layout.fillWidth: true
                         Text { text: "Transparency (Alpha):"; color: "#94a3b8"; font.pixelSize: 11; Layout.fillWidth: true }
                         Text {
-                            text: inspectorController && inspectorController.hasAlpha ? "Present (4-channel)" : "None (Opaque)"
-                            color: inspectorController && inspectorController.hasAlpha ? "#4ade80" : "#94a3b8"
+                            text: inspectorView.ctrl && inspectorView.ctrl.hasAlpha ? "Present (4-channel)" : "None (Opaque)"
+                            color: inspectorView.ctrl && inspectorView.ctrl.hasAlpha ? "#4ade80" : "#94a3b8"
                             font.pixelSize: 11
-                            font.bold: inspectorController ? inspectorController.hasAlpha : false
+                            font.bold: inspectorView.ctrl ? inspectorView.ctrl.hasAlpha : false
                         }
                     }
 
                     RowLayout {
                         Layout.fillWidth: true
                         Text { text: "Color Profile:"; color: "#94a3b8"; font.pixelSize: 11; Layout.fillWidth: true }
-                        Text { text: inspectorController ? inspectorController.colorSpace : ""; color: "#cbd5e1"; font.pixelSize: 10; elide: Text.ElideRight; Layout.maximumWidth: 150 }
+                        Text { text: inspectorView.ctrl ? inspectorView.ctrl.colorSpace : ""; color: "#cbd5e1"; font.pixelSize: 10; elide: Text.ElideRight; Layout.maximumWidth: 150 }
                     }
                 }
             }
@@ -244,7 +258,7 @@ ScrollView {
                     }
 
                     Repeater {
-                        model: inspectorController ? inspectorController.optimizationTips : []
+                        model: inspectorView.ctrl ? inspectorView.ctrl.optimizationTips : []
                         Text {
                             text: "• " + modelData
                             color: "#cbd5e1"
@@ -263,7 +277,7 @@ ScrollView {
                 radius: 8
                 color: "#1a1e2a"
                 border.color: "#262b3a"
-                visible: inspectorController && inspectorController.hasExif
+                visible: inspectorView.ctrl ? inspectorView.ctrl.hasExif : false
 
                 ColumnLayout {
                     id: exifCol
@@ -272,7 +286,7 @@ ScrollView {
                     spacing: 6
 
                     Text {
-                        text: "EXIF DATA (" + (inspectorController ? inspectorController.exifCount : 0) + " tags)"
+                        text: "EXIF DATA (" + (inspectorView.ctrl ? inspectorView.ctrl.exifCount : 0) + " tags)"
                         font.pixelSize: 10
                         font.bold: true
                         color: "#34d399"
@@ -280,7 +294,7 @@ ScrollView {
                     }
 
                     Repeater {
-                        model: inspectorController ? inspectorController.exifList : []
+                        model: inspectorView.ctrl ? inspectorView.ctrl.exifList : []
                         RowLayout {
                             Layout.fillWidth: true
                             Text {

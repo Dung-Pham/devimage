@@ -13,7 +13,48 @@ ScrollView {
         width: cropTool.availableWidth
         spacing: 16
 
-        // 1. Output Dimensions Card
+        // 1. Original Dimensions Card
+        Rectangle {
+            Layout.fillWidth: true
+            height: 54
+            radius: 8
+            color: "#1a1e2a"
+            border.color: "#262b3a"
+
+            RowLayout {
+                anchors.fill: parent
+                anchors.margins: 12
+
+                ColumnLayout {
+                    spacing: 2
+                    Text {
+                        text: "ORIGINAL IMAGE"
+                        font.pixelSize: 10
+                        font.bold: true
+                        color: "#64748b"
+                    }
+                    Text {
+                        text: (typeof cropController !== "undefined" && cropController && cropController.hasImage)
+                              ? (cropController.originalWidth + " × " + cropController.originalHeight + " px")
+                              : "No image loaded"
+                        font.pixelSize: 13
+                        font.bold: true
+                        color: "#f8fafc"
+                    }
+                }
+
+                Item { Layout.fillWidth: true }
+
+                Text {
+                    text: (typeof cropController !== "undefined" && cropController && cropController.hasImage)
+                          ? "Ready" : ""
+                    font.pixelSize: 11
+                    color: "#34d399"
+                }
+            }
+        }
+
+        // 2. Output Dimensions Card
         Rectangle {
             Layout.fillWidth: true
             height: 60

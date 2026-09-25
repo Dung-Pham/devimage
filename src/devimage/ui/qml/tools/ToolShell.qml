@@ -237,24 +237,84 @@ Rectangle {
                     imgH: previewCanvas.imgDisplayHeight
                 }
 
-                // Top Toolbar: Clear / Change Image
-                Button {
+                // Top Toolbar: Image Info Badge & Change Image Button
+                RowLayout {
                     anchors.top: parent.top
+                    anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.margins: 16
-                    text: "Change Image"
-                    font.pixelSize: 12
+                    spacing: 12
 
-                    contentItem: Text { text: "Change Image"; color: "#cbd5e1"; font.pixelSize: 12 }
-                    background: Rectangle {
-                        implicitWidth: 100
-                        implicitHeight: 32
+                    // File info badge
+                    Rectangle {
+                        height: 32
                         radius: 6
-                        color: "#1c202c"
-                        border.color: "#333b4f"
+                        color: "#181b24"
+                        border.color: "#2e3549"
+                        implicitWidth: fileInfoRow.implicitWidth + 24
+
+                        RowLayout {
+                            id: fileInfoRow
+                            anchors.centerIn: parent
+                            spacing: 8
+
+                            Text {
+                                text: "🖼"
+                                font.pixelSize: 12
+                            }
+
+                            Text {
+                                text: {
+                                    if (!toolShell.currentImagePath) return ""
+                                    var parts = toolShell.currentImagePath.split(/[\\/]/)
+                                    return parts[parts.length - 1]
+                                }
+                                font.pixelSize: 12
+                                font.bold: true
+                                color: "#f8fafc"
+                                elide: Text.ElideMiddle
+                                Layout.maximumWidth: 320
+                            }
+
+                            Rectangle {
+                                width: 1
+                                height: 14
+                                color: "#2e3549"
+                                visible: previewCanvas.originalWidth > 0
+                            }
+
+                            Text {
+                                text: previewCanvas.originalWidth + " × " + previewCanvas.originalHeight + " px"
+                                font.pixelSize: 11
+                                color: "#38bdf8"
+                                visible: previewCanvas.originalWidth > 0
+                            }
+                        }
                     }
 
-                    onClicked: toolShell.currentImagePath = ""
+                    Item { Layout.fillWidth: true }
+
+                    Button {
+                        text: "Change Image"
+                        font.pixelSize: 12
+
+                        contentItem: Text {
+                            text: "Change Image"
+                            color: "#cbd5e1"
+                            font.pixelSize: 12
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        background: Rectangle {
+                            implicitWidth: 105
+                            implicitHeight: 32
+                            radius: 6
+                            color: "#1c202c"
+                            border.color: "#333b4f"
+                        }
+
+                        onClicked: toolShell.currentImagePath = ""
+                    }
                 }
             }
         }
