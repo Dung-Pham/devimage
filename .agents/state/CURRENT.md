@@ -29,10 +29,10 @@ IN_PROGRESS: TASK-P3-03 complete; ready for commit and push checkpoint.
 Commit and push TASK-P3-03, then begin TASK-P3-04-copy-path-tool.
 
 # Last Verified Commit
-8efc041 (docs(agents): update task queue and state checkpoints for TASK-P3-02 completion)
+7cb3e15 (feat(rename): implement batch file rename service, controller bridge, and QML view)
 
 # Last Verified Push
-origin/feature/developer-tools (commit 8efc041 confirmed on GitHub)
+origin/feature/developer-tools (commit 7cb3e15 confirmed on GitHub)
 
 # Tests
 120/120 tests passing (100% passing across unit, GUI smoke, and control plane suites).

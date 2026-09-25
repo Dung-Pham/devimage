@@ -69,5 +69,5 @@ Implement the pure-Python `RenameService`, PySide6 `RenameController` bridge, an
 - **Commit Type**: feat
 - **Commit Scope**: rename
 - **Commit Message**: `feat(rename): implement batch file rename service, controller bridge, and QML view`
-- **Commit Hash**: 
-- **Push Confirmed**: NO
+- **Commit Hash**: 7cb3e15
+- **Push Confirmed**: YES
