@@ -14,6 +14,8 @@ import devimage
 from devimage.app.logging import get_logger
 from devimage.app.settings import SettingsManager
 from devimage.core.signals import AppSignalBridge
+from devimage.tools.color_picker.controller import ColorPickerController
+from devimage.tools.color_picker.service import ColorService
 from devimage.tools.compress.controller import CompressController
 from devimage.tools.compress.service import CompressService
 from devimage.tools.convert.controller import ConvertController
@@ -40,6 +42,7 @@ class BackendBridge(QObject):
         convert_controller: ConvertController | None = None,
         crop_controller: CropController | None = None,
         inspector_controller: InspectorController | None = None,
+        color_controller: ColorPickerController | None = None,
         parent: QObject | None = None,
     ) -> None:
         super().__init__(parent)
@@ -50,6 +53,7 @@ class BackendBridge(QObject):
         self._convert_controller = convert_controller
         self._crop_controller = crop_controller
         self._inspector_controller = inspector_controller
+        self._color_controller = color_controller
 
     @Property(str, constant=True)
     def appName(self) -> str:
@@ -95,6 +99,11 @@ class BackendBridge(QObject):
     def inspectorController(self) -> InspectorController | None:
         """Access to the image metadata inspector controller."""
         return self._inspector_controller
+
+    @Property(QObject, constant=True)
+    def colorPickerController(self) -> ColorPickerController | None:
+        """Access to the color picker tool controller."""
+        return self._color_controller
 
     @Slot(str, result=str)
     def urlToPath(self, file_url: str) -> str:
@@ -201,6 +210,12 @@ class DevImageApp:
             signals=self.signals,
             settings=self.settings,
         )
+        self.color_service = ColorService()
+        self.color_controller = ColorPickerController(
+            service=self.color_service,
+            signals=self.signals,
+            settings=self.settings,
+        )
         self.backend = BackendBridge(
             signals=self.signals,
             settings=self.settings,
@@ -209,6 +224,7 @@ class DevImageApp:
             convert_controller=self.convert_controller,
             crop_controller=self.crop_controller,
             inspector_controller=self.inspector_controller,
+            color_controller=self.color_controller,
         )
 
         self.engine = QQmlApplicationEngine()
@@ -220,6 +236,7 @@ class DevImageApp:
         self.engine.rootContext().setContextProperty(
             "inspectorController", self.inspector_controller
         )
+        self.engine.rootContext().setContextProperty("colorPickerController", self.color_controller)
 
         self._qml_path = Path(__file__).resolve().parent.parent / "ui" / "qml" / "Main.qml"
 

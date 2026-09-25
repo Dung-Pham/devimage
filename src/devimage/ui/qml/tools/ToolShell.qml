@@ -41,6 +41,8 @@ Rectangle {
                 cropController.loadImage(toolShell.currentImagePath)
             } else if (toolShell.toolId === "inspector" && typeof inspectorController !== "undefined" && inspectorController) {
                 inspectorController.loadImage(toolShell.currentImagePath)
+            } else if (toolShell.toolId === "color_picker" && typeof colorPickerController !== "undefined" && colorPickerController) {
+                colorPickerController.loadImage(toolShell.currentImagePath)
             }
         }
     }
@@ -57,6 +59,8 @@ Rectangle {
                 cropController.loadImage(toolShell.currentImagePath)
             } else if (toolShell.toolId === "inspector" && typeof inspectorController !== "undefined" && inspectorController) {
                 inspectorController.loadImage(toolShell.currentImagePath)
+            } else if (toolShell.toolId === "color_picker" && typeof colorPickerController !== "undefined" && colorPickerController) {
+                colorPickerController.loadImage(toolShell.currentImagePath)
             }
         }
     }
@@ -111,7 +115,7 @@ Rectangle {
                     id: toolOptionsLoader
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    source: toolShell.toolId === "resize" ? "ResizeTool.qml" : (toolShell.toolId === "compress" ? "CompressTool.qml" : (toolShell.toolId === "convert" ? "ConvertTool.qml" : (toolShell.toolId === "crop" ? "CropTool.qml" : (toolShell.toolId === "inspector" ? "InspectorTool.qml" : ""))))
+                    source: toolShell.toolId === "resize" ? "ResizeTool.qml" : (toolShell.toolId === "compress" ? "CompressTool.qml" : (toolShell.toolId === "convert" ? "ConvertTool.qml" : (toolShell.toolId === "crop" ? "CropTool.qml" : (toolShell.toolId === "inspector" ? "InspectorTool.qml" : (toolShell.toolId === "color_picker" ? "ColorPickerTool.qml" : "")))))
                     visible: source !== ""
                 }
 
@@ -151,12 +155,12 @@ Rectangle {
                     visible: toolOptionsLoader.source === ""
                 }
 
-                // Action Button (hidden for read-only inspector tool)
+                // Action Button (hidden for read-only inspector and color_picker tools)
                 Button {
                     id: processBtn
                     Layout.fillWidth: true
                     height: 42
-                    visible: toolShell.toolId !== "inspector"
+                    visible: toolShell.toolId !== "inspector" && toolShell.toolId !== "color_picker"
 
                     property bool isBusy: (toolShell.toolId === "resize" && typeof resizeController !== "undefined" && resizeController && resizeController.isProcessing) || (toolShell.toolId === "compress" && typeof compressController !== "undefined" && compressController && compressController.isProcessing) || (toolShell.toolId === "convert" && typeof convertController !== "undefined" && convertController && convertController.isProcessing) || (toolShell.toolId === "crop" && typeof cropController !== "undefined" && cropController && cropController.isProcessing)
 
@@ -235,6 +239,18 @@ Rectangle {
                     imgY: previewCanvas.imgDisplayY
                     imgW: previewCanvas.imgDisplayWidth
                     imgH: previewCanvas.imgDisplayHeight
+                }
+
+                ColorPickerOverlay {
+                    id: colorPickerOverlay
+                    anchors.fill: parent
+                    visible: toolShell.toolId === "color_picker"
+                    imgX: previewCanvas.imgDisplayX
+                    imgY: previewCanvas.imgDisplayY
+                    imgW: previewCanvas.imgDisplayWidth
+                    imgH: previewCanvas.imgDisplayHeight
+                    origW: previewCanvas.originalWidth
+                    origH: previewCanvas.originalHeight
                 }
 
                 // Top Toolbar: Image Info Badge & Change Image Button
