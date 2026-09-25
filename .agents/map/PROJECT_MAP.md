@@ -55,36 +55,39 @@ Agents must consult this map to answer *"Where should I look for this informatio
 
 ---
 
-## 5. Feature Documentation (Planned / Modular)
+## 5. Feature Documentation (Planned / Modular — 13 MVP Tools)
 
+### Image Tools
+- **Remove Background Tool**: `docs/features/remove_background.md`
 - **Resize Tool**: `docs/features/resize.md`
 - **Compress Tool**: `docs/features/compress.md`
 - **Convert Tool**: `docs/features/convert.md`
 - **Crop Tool**: `docs/features/crop.md`
-- **Watermark Tool**: `docs/features/watermark.md`
-- **Exif Metadata Tool**: `docs/features/exif.md`
-- **Color Palette & Eyedropper**: `docs/features/color.md`
-- **Base64 Converter**: `docs/features/base64.md`
-- **App Icon Generator**: `docs/features/app_icon.md`
-- **Social Media Resizer**: `docs/features/social_resizer.md`
-- **Remove Background**: `docs/features/remove_background.md`
+
+### Developer Tools
+- **Image Inspector**: `docs/features/inspector.md`
+- **Color Picker**: `docs/features/color_picker.md`
+- **Batch Rename**: `docs/features/rename.md`
+- **Copy Path**: `docs/features/copy_path.md`
 - **OCR Text Extraction**: `docs/features/ocr.md`
-- **Gemini Vision Assistant**: `docs/features/gemini_vision.md`
-- **Batch Processing Manager**: `docs/features/batch.md`
-- **Preset Management**: `docs/features/presets.md`
+
+### AI Tools
+- **AI Image Analysis**: `docs/features/analyze.md`
+- **Alt Text Generator**: `docs/features/alt_text.md`
+- **AI Command**: `docs/features/ai_command.md`
 
 ---
 
 ## 6. Source Code Locations (src/devimage/)
 
 - **Application Entry Point**: `src/devimage/main.py`
-- **Core Configuration & Base Types**: `src/devimage/core/`
-- **UI Presentation Layer (QML)**: `src/devimage/ui/`
-- **Tool Service Implementations**: `src/devimage/services/`
-- **Image Processing Engines (Pillow, OpenCV, NumPy)**: `src/devimage/engines/image/`
-- **AI Processing Engines (ONNX, Rembg, OCR, Gemini)**: `src/devimage/engines/ai/`
-- **Background Worker Threads**: `src/devimage/workers/`
-- **Common Utilities & Helpers**: `src/devimage/utils/`
+- **Application Lifecycle, Settings & Paths**: `src/devimage/app/`
+- **Core Models, Errors, Signals & Types**: `src/devimage/core/`
+- **Engines (Pillow, OpenCV, ONNX, Rembg, RapidOCR, Gemini)**: `src/devimage/engine/` (`image/`, `background_removal/`, `ocr/`, `ai/`)
+- **Independent Tool Implementations**: `src/devimage/tools/`
+- **Shared Application Services**: `src/devimage/services/`
+- **Background Worker Threads & ThreadPool**: `src/devimage/workers/`
+- **UI Presentation (QML) & Backend Bridges**: `src/devimage/ui/` (`qml/`, `bridge/`)
 
 ---
 
@@ -92,16 +95,17 @@ Agents must consult this map to answer *"Where should I look for this informatio
 
 - **Unit Tests**: `tests/unit/`
 - **Integration Tests**: `tests/integration/`
-- **Service Verification Tests**: `tests/services/`
 - **Test Fixtures & Assets**: `tests/fixtures/`
 
 ---
 
-## 8. Packaging & Deployment
+## 8. Packaging, Deployment & Assets
 
-- **PyInstaller Bundler**: `packaging/pyinstaller/`
-- **Windows Installer (Inno Setup / NSIS)**: `packaging/windows/`
-- **Build Automation Scripts**: `scripts/build/`
+- **PyInstaller Specification**: `packaging/devimage.spec`
+- **Windows Installer (Inno Setup)**: `packaging/installer/`
+- **Automation Scripts**: `scripts/` (`dev.ps1`, `test.ps1`, `build.ps1`)
+- **Assets & Branding**: `assets/` (`icons/`, `branding/`)
+- **Local AI Models Storage**: `models/`
 
 ---
 

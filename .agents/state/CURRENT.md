@@ -2,41 +2,44 @@
 Phase 0 — Foundation & Project Setup
 
 # Current Feature
-Persistent Agent Management Structure
+Project Foundation & Setup
 
 # Current Branch
-main
+feature/project-foundation
 
 # Status
-Completed (Persistent agent context initialized and verified)
+Context aligned; ready for Phase 0 foundation setup
 
 # Completed
-- Agent management structure created (.agents/ directory, AGENTS.md, rules, map, state)
-- Consistency audit, recovery simulation, and initial push completed
+- Persistent agent context initialized (.agents/, AGENTS.md, rules, map, state)
+- Execution context aligned with Master Plan (plan.md) and Master Prompt (prompt-build.md)
+- PROJECT_MAP.md aligned with 13 MVP tools and exact source layout
 
 # In Progress
-- Ready to initiate Phase 0 foundation
+- Phase 0 foundation setup
 
 # Next Action
-Begin Phase 0 foundation: set up project layout (src/devimage/, tests/), pyproject.toml, and PySide6 dependencies.
+Begin Phase 0: initialize project structure (src/devimage/, tests/), pyproject.toml, and PySide6/QML base dependencies.
 
 # Last Verified Commit
-65b2e48 (docs: sync agent build control tree and update state checkpoint)
+1a8b5cf (chore(agent): point CURRENT.md to latest verified commit)
 
 # Last Verified Push
-origin/main (commit 65b2e48 confirmed on GitHub)
+origin/feature/project-foundation (commit 1a8b5cf confirmed on GitHub)
 
 # Tests
 Not started (Phase 0 foundation pending).
 
 # Known Issues
-None known.
+None.
 
 # Relevant Documents
+- AGENTS.md
 - .agents/map/PROJECT_MAP.md
 - plan.md
 - prompt-build.md
-- 3-prompt-build-control-tree.md
+- .agents/rules/coding.md
+- .agents/rules/git.md
 
 # Last Updated
-2026-09-24 17:45:00 +07:00
+2026-09-25 08:10:00 +07:00
