@@ -53,6 +53,9 @@ Rectangle {
         }
 
         function onFileSelected(filePath) {
+            if (shell.currentRoute === "home") {
+                shell.navigateToTool("resize", "Resize Image")
+            }
             if (activeToolShell) {
                 activeToolShell.currentImagePath = filePath
             }

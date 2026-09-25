@@ -33,6 +33,20 @@ ApplicationWindow {
         onActivated: settingsDialog.open()
     }
 
+    // Window-level Drag and Drop support
+    DropArea {
+        anchors.fill: parent
+        onDropped: function(drop) {
+            if (drop.hasUrls && drop.urls.length > 0) {
+                var rawUrl = drop.urls[0].toString()
+                if (backend) {
+                    backend.openImageFile(rawUrl)
+                }
+                drop.acceptProposedAction()
+            }
+        }
+    }
+
     // Embed Modular Application Shell
     AppShell {
         id: appShell

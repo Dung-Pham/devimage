@@ -58,6 +58,20 @@ class BackendBridge(QObject):
             return QUrl(file_url).toLocalFile()
         return file_url
 
+    @Slot(str, result=str)
+    def pathToUrl(self, file_path: str) -> str:
+        """Convert a local filesystem path to a file:// QUrl string for QML Image elements."""
+        if not file_path:
+            return ""
+        if (
+            file_path.startswith("file:")
+            or file_path.startswith("qrc:")
+            or file_path.startswith("http:")
+            or file_path.startswith("https:")
+        ):
+            return file_path
+        return QUrl.fromLocalFile(file_path).toString()
+
     @Slot(str, result=bool)
     def validateImageFile(self, file_path: str) -> bool:
         """Verify that the path points to a file with a supported image extension."""

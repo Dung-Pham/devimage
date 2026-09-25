@@ -218,3 +218,40 @@ def test_settings_dialog_and_persistence(app_instance: DevImageApp):
     assert settings.get("default_quality") == 85
     assert settings.get("overwrite_mode") == "rename"
     assert settings.get("auto_preview") is True
+
+
+def test_image_preview_dimensions_and_home_drop(app_instance: DevImageApp, tmp_path: Path):
+    """Verify that opening an image from Home route navigates to tool and decodes dimensions."""
+    from PIL import Image as PILImage
+
+    root = app_instance.engine.rootObjects()[0]
+    app_shell = root.findChild(QObject, "appShell")
+    assert app_shell is not None
+
+    # Reset to home route
+    app_shell.navigateToHome()
+    QGuiApplication.processEvents()
+    assert app_shell.property("currentRoute") == "home"
+
+    # Create a real 640x480 test image with PIL
+    test_img = tmp_path / "canvas_sample.png"
+    pil_img = PILImage.new("RGBA", (640, 480), color=(100, 150, 200, 255))
+    pil_img.save(test_img)
+
+    # Open image (simulating drag-and-drop or file picker on home)
+    app_instance.backend.openImageFile(str(test_img))
+    QGuiApplication.processEvents()
+
+    # Verify auto-transition to tool workspace
+    assert app_shell.property("currentRoute") == "tool"
+
+    tool_shell = app_shell.findChild(QObject, "activeToolShell")
+    assert tool_shell is not None
+    assert tool_shell.property("hasImage") is True
+
+    # Verify previewCanvas received image and decoded actual dimensions
+    preview_canvas = tool_shell.findChild(QObject, "previewCanvas")
+    assert preview_canvas is not None
+    assert preview_canvas.property("originalWidth") == 640
+    assert preview_canvas.property("originalHeight") == 480
+    assert preview_canvas.property("zoomLevel") > 0.0

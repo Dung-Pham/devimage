@@ -4,6 +4,7 @@ import QtQuick.Layouts
 
 Rectangle {
     id: previewRoot
+    objectName: "previewCanvas"
     color: "#0d0f14"
     clip: true
 
@@ -15,8 +16,23 @@ Rectangle {
     property int originalWidth: previewImage.sourceSize.width
     property int originalHeight: previewImage.sourceSize.height
 
+    function formatSourceUrl(src) {
+        if (!src) return ""
+        if (typeof backend !== "undefined" && backend && backend.pathToUrl) {
+            return backend.pathToUrl(src)
+        }
+        if (src.indexOf("file:") === 0 || src.indexOf("qrc:") === 0 || src.indexOf("http:") === 0 || src.indexOf("https:") === 0) {
+            return src
+        }
+        var clean = src.replace(/\\/g, "/")
+        if (clean.charAt(0) === "/") {
+            return "file://" + clean
+        }
+        return "file:///" + clean
+    }
+
     function fitToView() {
-        if (originalWidth > 0 && originalHeight > 0) {
+        if (originalWidth > 0 && originalHeight > 0 && flickable.width > 0 && flickable.height > 0) {
             var scaleX = (flickable.width - 40) / originalWidth
             var scaleY = (flickable.height - 40) / originalHeight
             zoomLevel = Math.min(Math.min(scaleX, scaleY), 1.0)
@@ -30,8 +46,8 @@ Rectangle {
     }
 
     function centerImage() {
-        flickable.contentX = Math.max(0, (contentItem.width - flickable.width) / 2)
-        flickable.contentY = Math.max(0, (contentItem.height - flickable.height) / 2)
+        flickable.contentX = Math.max(0, (contentContainer.width - flickable.width) / 2)
+        flickable.contentY = Math.max(0, (contentContainer.height - flickable.height) / 2)
     }
 
     // Checkerboard transparency background pattern
@@ -60,15 +76,14 @@ Rectangle {
 
         Item {
             id: contentContainer
-            width: Math.max(previewImage.width * zoomLevel + 60, flickable.width)
-            height: Math.max(previewImage.height * zoomLevel + 60, flickable.height)
+            width: Math.max(previewImage.width + 60, flickable.width)
+            height: Math.max(previewImage.height + 60, flickable.height)
 
             Image {
                 id: previewImage
                 anchors.centerIn: parent
-                source: previewRoot.imageSource ? (previewRoot.imageSource.indexOf(":") !== -1 ? previewRoot.imageSource : "file:///" + previewRoot.imageSource) : ""
+                source: previewRoot.formatSourceUrl(previewRoot.imageSource)
                 fillMode: Image.PreserveAspectFit
-                asynchronous: true
                 smooth: true
                 cache: false
 
@@ -76,6 +91,14 @@ Rectangle {
                 height: sourceSize.height > 0 ? sourceSize.height * previewRoot.zoomLevel : 0
 
                 onStatusChanged: {
+                    if (status === Image.Ready) {
+                        previewRoot.fitToView()
+                    } else if (status === Image.Error) {
+                        console.error("ImagePreview: Failed to load image from source:", source)
+                    }
+                }
+
+                onSourceSizeChanged: {
                     if (status === Image.Ready) {
                         previewRoot.fitToView()
                     }
