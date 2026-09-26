@@ -1,0 +1,2 @@
+"""Desktop AI pet feature."""
+

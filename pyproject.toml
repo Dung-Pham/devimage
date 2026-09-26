@@ -24,6 +24,7 @@ dev = [
 
 [project.scripts]
 devimage = "devimage.main:main"
+devimage-pet = "devimage.pet_main:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/devimage"]

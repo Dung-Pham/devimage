@@ -2,13 +2,13 @@
 Phase 2 — Core Image Tools (Completed)
 
 # Current Feature
-Phase 2 Acceptance & Gate Verification
+Desktop AI Pet MVP
 
 # Current Branch
 feature/core-image-tools
 
 # Status
-Phase 2 is 100% completed and verified. STOPPED at GATE-PHASE awaiting user approval to migrate to Autonomous Build System v2.
+Desktop AI Pet MVP implemented on branch `feature/ai-desktop-pet`. Phase 2 remains completed; the existing autonomous-build gate is unchanged on the core-image-tools line.
 
 # Completed
 - Phase 0 Foundation 100% complete and verified (commit 23b233f through 7420f20)
@@ -23,13 +23,13 @@ Phase 2 is 100% completed and verified. STOPPED at GATE-PHASE awaiting user appr
 - TASK-P2-06-phase-2-verification-and-acceptance: comprehensive end-to-end integration and acceptance tests across all 4 image tools, format matrices, async execution, and QML shell wiring (commit 88f2cc9)
 
 # In Progress
-- STOPPED at GATE-PHASE (Awaiting human verification and approval for migration to Autonomous Build System v2)
+- Desktop AI Pet MVP: floating QML pet, draggable always-on-top window, chat panel, asynchronous OpenAI Responses API client, and configurable model.
 
 # Next Action
-Awaiting user confirmation at GATE-PHASE. Once approved, merge feature/core-image-tools into main, and initialize branch feature/autonomous-build-v2.
+Configure `OPENAI_API_KEY` and launch `uv run devimage-pet` for interactive AI chat; then review the pet UI before merging the feature branch.
 
 # Last Verified Commit
-88f2cc9 (test(tools): add comprehensive acceptance tests for Phase 2 core image tools)
+88f2cc9 (test(tools): add comprehensive acceptance tests for Phase 2 core image tools); pet changes are uncommitted on `feature/ai-desktop-pet`.
 
 # Last Verified Push
 origin/feature/core-image-tools (commit 88f2cc9 confirmed on GitHub)
@@ -48,4 +48,4 @@ None.
 - build-automatic-v2.md
 
 # Last Updated
-2026-09-25 15:00:00 +07:00
+2026-09-26 10:15:00 +07:00
